@@ -7,7 +7,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.wondertwo.csunetwork.R;
 import com.wondertwo.csunetwork.ui.MainActivity;
 
 /**
@@ -16,16 +15,16 @@ import com.wondertwo.csunetwork.ui.MainActivity;
  */
 public abstract class BaseContentPager {
 
-    // 定义Activity接收传入的Context对象的activity
+    // 接收Context对象activity
     public Activity mActivity;
-    // 定义主页面根布局对象
+    // 主页面根布局对象
     public View mRootView;
-    // 标题
+    // 标题栏显示的文字
     public TextView tvTitle;
-    // 内容
-    public FrameLayout flContent;
-    // 打开侧滑菜单的图片按钮
+    // 标题栏打开侧滑菜单的图片按钮
     public ImageButton btnLeftMenu;
+    // 主页面内容区布局对象
+    public FrameLayout flContent;
 
     // 构造方法
     public BaseContentPager(Activity activity) {
@@ -34,9 +33,10 @@ public abstract class BaseContentPager {
     }
 
     /**
-     * 初始化布局
+     * 初始化布局initViews()抽象方法
      */
-    private void initViews() {
+    public abstract void initViews();
+    /*{
         mRootView = View.inflate(mActivity, R.layout.base_content_pager, null);
 
         tvTitle = (TextView) mRootView.findViewById(R.id.tv_title_text);
@@ -49,7 +49,12 @@ public abstract class BaseContentPager {
                 toggleSlidingMenu();
             }
         });
-    }
+    }*/
+
+    /**
+     * 初始化数据initData()抽象方法
+     */
+    public abstract void initData();
 
     // 切换SlidingMenu的状态
     protected void toggleSlidingMenu() {
@@ -58,16 +63,15 @@ public abstract class BaseContentPager {
         slidingMenu.toggle();// 切换状态，显示时隐藏，隐藏时显示
     }
 
-    // 初始化数据
-    public abstract void initData();
-
-    // 设置左侧边栏开或关闭
+    // 设置侧滑菜单栏是否可以打开或关闭
     public void setSlidingMenuEnable(boolean enable) {
-        MainActivity newsUi = (MainActivity) mActivity;
-        SlidingMenu slidingMenu = newsUi.getSlidingMenu();
+        MainActivity mainUi = (MainActivity) mActivity;
+        SlidingMenu slidingMenu = mainUi.getSlidingMenu();
         if (enable) {
+            // 设置侧滑菜单的触摸打开模式为全屏触摸模式
             slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         } else {
+            // 设置侧滑菜单的触摸打开模式为none，即关闭触摸打开
             slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
         }
     }

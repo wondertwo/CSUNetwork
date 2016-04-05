@@ -3,7 +3,12 @@ package com.wondertwo.csunetwork.ui.pager;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.wondertwo.csunetwork.R;
 
 /**
  * NetPager主页面wifi登录页
@@ -15,6 +20,28 @@ public class NewsPager extends BaseContentPager {
         super(activity);
     }
 
+    /**
+     * 初始化布局的抽象方法initViews()
+     */
+    @Override
+    public void initViews() {
+        mRootView = View.inflate(mActivity, R.layout.base_content_pager, null);
+
+        tvTitle = (TextView) mRootView.findViewById(R.id.tv_title_text);
+        flContent = (FrameLayout) mRootView.findViewById(R.id.fl_base_pager);
+        btnLeftMenu = (ImageButton) mRootView.findViewById(R.id.ib_left_menu);
+
+        btnLeftMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleSlidingMenu();
+            }
+        });
+    }
+
+    /**
+     * 初始化数据initData()
+     */
     @Override
     public void initData() {
         // 设置标题栏内容

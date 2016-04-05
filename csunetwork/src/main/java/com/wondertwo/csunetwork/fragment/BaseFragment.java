@@ -18,8 +18,7 @@ public abstract class BaseFragment extends Fragment {
     public Activity mActivity;
 
     /**
-     * fragment创建
-     * @param savedInstanceState
+     * fragment创建，获取fragment所依附的activity对象
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,11 +27,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * fragment布局view创建
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * 创建fragment的布局view
      */
     @Nullable
     @Override
@@ -41,8 +36,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * fragment所依附的布局的创建
-     * @param savedInstanceState
+     * 创建fragment所依附Activity
      */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -52,7 +46,6 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 初始化view抽象方法
-     * @return
      */
     public abstract View initView();
 

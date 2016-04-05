@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CSUNetwork.iml" filepath="$PROJECT_DIR$/CSUNetwork.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SlidingMenuLibrary/SlidingMenuLibrary.iml" filepath="$PROJECT_DIR$/SlidingMenuLibrary/SlidingMenuLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/csunetwork/csunetwork.iml" filepath="$PROJECT_DIR$/csunetwork/csunetwork.iml" />
     </modules>
   </component>

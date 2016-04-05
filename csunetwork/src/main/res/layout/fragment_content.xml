@@ -17,9 +17,9 @@
         android:background="@color/themeColor"
         android:orientation="horizontal" >
         <RadioButton
-            android:id="@+id/rb_find"
-            android:drawableTop="@drawable/rbtn_find_selector"
-            android:text="发现"
+            android:id="@+id/rb_net"
+            android:drawableTop="@drawable/rbtn_net_selector"
+            android:text="网络"
             style="@style/BottomTabStyle" />
         <RadioButton
             android:id="@+id/rb_news"

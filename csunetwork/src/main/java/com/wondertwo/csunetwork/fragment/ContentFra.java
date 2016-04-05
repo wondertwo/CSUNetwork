@@ -37,7 +37,7 @@ public class ContentFra extends BaseFragment {
      */
     @Override
     public void initData() {
-        rgBottomBar.check(R.id.rb_news);// 表示默认进入页面是新闻页
+        rgBottomBar.check(R.id.rb_net);// 表示默认进入页面是wifi登录页
 
         mPagerList = new ArrayList<>();
 

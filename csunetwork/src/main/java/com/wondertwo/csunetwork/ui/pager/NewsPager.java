@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 /**
+ * NetPager主页面wifi登录页
  * Created by wondertwo on 2016/4/5.
  */
 public class NewsPager extends BaseContentPager {
@@ -17,13 +18,13 @@ public class NewsPager extends BaseContentPager {
     @Override
     public void initData() {
         // 设置标题栏内容
-        tvTitle.setText("信息浏览页");
+        tvTitle.setText("资讯");
         // btnLeftMenu.setVisibility(View.GONE);
         setSlidingMenuEnable(true);// 打开侧边栏
 
         // 设置内容区布局
         TextView text = new TextView(mActivity);
-        text.setText("信息浏览页");
+        text.setText("资讯浏览页");
         text.setTextColor(Color.RED);
         text.setTextSize(20);
         text.setGravity(Gravity.CENTER);
@@ -31,4 +32,5 @@ public class NewsPager extends BaseContentPager {
         // 向FrameLayout中动态的添加布局
         flContent.addView(text);
     }
+
 }

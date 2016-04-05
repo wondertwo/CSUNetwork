@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wondertwo.csunetwork.R;
@@ -28,7 +28,7 @@ public class NewsPager extends BaseContentPager {
         mRootView = View.inflate(mActivity, R.layout.base_content_pager, null);
 
         tvTitle = (TextView) mRootView.findViewById(R.id.tv_title_text);
-        flContent = (FrameLayout) mRootView.findViewById(R.id.fl_base_pager);
+        rlContent = (RelativeLayout) mRootView.findViewById(R.id.rl_base_pager);
         btnLeftMenu = (ImageButton) mRootView.findViewById(R.id.ib_left_menu);
 
         btnLeftMenu.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +57,7 @@ public class NewsPager extends BaseContentPager {
         text.setGravity(Gravity.CENTER);
 
         // 向FrameLayout中动态的添加布局
-        flContent.addView(text);
+        rlContent.addView(text);
     }
 
 }

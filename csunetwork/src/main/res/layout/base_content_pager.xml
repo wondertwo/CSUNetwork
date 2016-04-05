@@ -28,11 +28,11 @@
             android:layout_alignTop="@+id/tv_title_text" />
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/fl_base_pager"
+    <RelativeLayout
+        android:id="@+id/rl_base_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-    </FrameLayout>
+    </RelativeLayout>
 
 </LinearLayout>

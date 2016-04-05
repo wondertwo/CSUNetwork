@@ -2,8 +2,8 @@ package com.wondertwo.csunetwork.ui.pager;
 
 import android.app.Activity;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -24,7 +24,7 @@ public abstract class BaseContentPager {
     // 标题栏打开侧滑菜单的图片按钮
     public ImageButton btnLeftMenu;
     // 主页面内容区布局对象
-    public FrameLayout flContent;
+    public RelativeLayout rlContent;
 
     // 构造方法
     public BaseContentPager(Activity activity) {

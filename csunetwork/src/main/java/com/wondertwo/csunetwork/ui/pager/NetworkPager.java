@@ -2,7 +2,6 @@ package com.wondertwo.csunetwork.ui.pager;
 
 import android.app.Activity;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,7 +26,7 @@ public class NetworkPager extends BaseContentPager {
         mRootView = View.inflate(mActivity, R.layout.base_content_pager, null);
 
         tvTitle = (TextView) mRootView.findViewById(R.id.tv_title_text);
-        flContent = (FrameLayout) mRootView.findViewById(R.id.fl_base_pager);
+        rlContent = (RelativeLayout) mRootView.findViewById(R.id.rl_login_page);
         btnLeftMenu = (ImageButton) mRootView.findViewById(R.id.ib_left_menu);
 
         btnLeftMenu.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +49,7 @@ public class NetworkPager extends BaseContentPager {
         setSlidingMenuEnable(true);
 
         // 向FrameLayout中动态的添加布局
-        flContent.addView(ShowLoginPage(mActivity));
+        rlContent.addView(ShowLoginPage(mActivity));
     }
 
     /**

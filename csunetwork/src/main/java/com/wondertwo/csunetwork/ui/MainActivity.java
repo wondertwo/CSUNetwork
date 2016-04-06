@@ -22,22 +22,14 @@ public class MainActivity extends SlidingFragmentActivity {
         super.onCreate(savedInstanceState);
         // 取消标题栏
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        // 设置全屏显示
-        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-        //         WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // 设置前景布局
         setContentView(R.layout.activity_main);
-        // 隐藏NavigationBar
-        // View decorView = getWindow().getDecorView();
-        // int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        //         | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        // decorView.setSystemUiVisibility(uiOptions);
-
-        /*setBehindContentView(R.layout.activity_left);// 设置侧边栏布局*/
+        // 设置后景布局
         setBehindContentView(R.layout.activity_left_menu);
         // 获取侧边栏对象
         SlidingMenu slidingMenu = getSlidingMenu();
-        slidingMenu.setTouchModeAbove(slidingMenu.TOUCHMODE_FULLSCREEN);// 设置模式为全屏触摸
-        // 设置屏幕预留宽度=屏幕宽度的1/3
+        slidingMenu.setTouchModeAbove(slidingMenu.TOUCHMODE_FULLSCREEN);// 侧滑模式为全屏触摸
+        // 设置屏幕预留宽度
         slidingMenu.setBehindOffset(getWindowManager().getDefaultDisplay().getWidth() / 2);
 
         // 初始化Fragment

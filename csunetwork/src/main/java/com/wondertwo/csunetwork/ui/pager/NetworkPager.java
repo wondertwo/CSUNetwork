@@ -26,9 +26,11 @@ public class NetworkPager extends BaseContentPager {
         mRootView = View.inflate(mActivity, R.layout.base_content_pager, null);
 
         tvTitle = (TextView) mRootView.findViewById(R.id.tv_title_text);
-        rlContent = (RelativeLayout) mRootView.findViewById(R.id.rl_login_page);
-        btnLeftMenu = (ImageButton) mRootView.findViewById(R.id.ib_left_menu);
 
+        // 加载数字中南登录页面布局
+        rlContent = (RelativeLayout) mRootView.findViewById(R.id.rl_login_page);
+
+        btnLeftMenu = (ImageButton) mRootView.findViewById(R.id.ib_left_menu);
         btnLeftMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,15 +50,15 @@ public class NetworkPager extends BaseContentPager {
         // 设置侧边栏的状态为可以打开
         setSlidingMenuEnable(true);
 
-        // 向FrameLayout中动态的添加布局
-        rlContent.addView(ShowLoginPage(mActivity));
+
+        /*--------------------------------------------------------*/
     }
 
     /**
      * 设置数字中南登录页面布局
      */
-    private RelativeLayout ShowLoginPage(Activity activity) {
+    /*private RelativeLayout ShowLoginPage(Activity activity) {
         RelativeLayout layout = new RelativeLayout(activity);
         return layout;
-    }
+    }*/
 }

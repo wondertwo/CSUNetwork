@@ -1,39 +1,8 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="android:Theme.Holo.Light.NoActionBar">
     </style>
-
-    <!-- 颜色背景的透明状态栏主题，statusBarColor需要设置为和标题栏相同颜色 -->
-    <style name="ColorTranslucentTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:statusBarColor">@color/themeColor</item>
-    </style>
-
-    <!-- 图片背景的透明状态栏主题 ，需要图片设置为Activity或Fragment根布局的backgroung -->
-    <style name="ImageTranslucentTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
-    </style>
-
-    <!--android:textSize="16sp"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="center"-->
-    <!--android:layout_gravity="center_vertical"-->
-    <!--android:button="@null"-->
-    <!--android:padding="6dp"-->
-    <!--android:drawablePadding="3dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:checked="false"-->
-    <!--android:clickable="true"-->
 
     <!--主页面底栏RadioButton样式-->
     <style name="BottomTabStyle" >
@@ -47,6 +16,5 @@
         <item name="android:layout_weight">1</item>
         <item name="android:checkable">true</item>
     </style>
-
 
 </resources>

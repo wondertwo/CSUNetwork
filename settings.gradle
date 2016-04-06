@@ -1,1 +1,1 @@
-include ':csunetwork', ':jsoupLibrary', ':SlidingMenuLibrary'
+include ':csunetwork', ':SlidingMenuLibrary'

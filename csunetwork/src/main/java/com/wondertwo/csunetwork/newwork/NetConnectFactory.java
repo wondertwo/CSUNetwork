@@ -1,4 +1,4 @@
-package com.wondertwo.csunetwork.network;
+package com.wondertwo.csunetwork.newwork;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -31,9 +31,9 @@ import java.util.List;
  * DigitConnectionFactory网络连接工厂类
  * Created by wondertwo on 2016/4/6.
  */
-public class DigitConnectionFactory {
+public class NetConnectFactory {
 
-    public static DigitConnectionFactory instance = null;
+    public static NetConnectFactory instance = null;
     private Context context;
     private DefaultHttpClient httpClient;
 
@@ -42,14 +42,14 @@ public class DigitConnectionFactory {
     private final String LOGOUT_POST_URL = "http://61.137.86.87:8080/portalNat444/AccessServices/logout?";
     private final String LOGOUT_PEFER = "http://61.137.86.87:8080/portalNat444/main2.jsp";
 
-    public static DigitConnectionFactory getInstance(Context context) {
+    public static NetConnectFactory getInstance(Context context) {
         if (instance == null) {
-            instance = new DigitConnectionFactory(context);
+            instance = new NetConnectFactory(context);
         }
         return instance;
     }
 
-    public DigitConnectionFactory(Context context) {
+    public NetConnectFactory(Context context) {
         this.context = context;
         httpClient = new DefaultHttpClient();
     }
@@ -115,7 +115,7 @@ public class DigitConnectionFactory {
             responses = httpClient.execute(httpPost);
             entity = responses.getEntity();
             result = EntityUtils.toString(entity, "UTF-8");
-            if(null == entity)
+            if (null == entity)
                 Log.d("Response content有问题", result);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -170,6 +170,7 @@ public class DigitConnectionFactory {
                 UserApplication.getSpUtil().setValue(UserInfo.SP_USER_BRAS_ADDRESS, brasAddress);
                 UserApplication.getSpUtil().setValue(UserInfo.SP_USER_INTRANET_ADDRESS, userIntranetAddress);
             }
+
         } catch (Exception e) {
             return null;
         }

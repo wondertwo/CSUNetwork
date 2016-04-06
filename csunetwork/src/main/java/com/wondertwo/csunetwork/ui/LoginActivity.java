@@ -13,7 +13,7 @@ import com.wondertwo.csunetwork.R;
 import com.wondertwo.csunetwork.async.AsyncTaskWarpper;
 import com.wondertwo.csunetwork.async.AsyncWorkResult;
 import com.wondertwo.csunetwork.async.listener.NotifyListener;
-import com.wondertwo.csunetwork.network.DigitConnectionFactory;
+import com.wondertwo.csunetwork.newwork.NetConnectFactory;
 import com.wondertwo.csunetwork.user.UserInfo;
 import com.wondertwo.csunetwork.utils.NetConnectUtils;
 import com.wondertwo.csunetwork.utils.SharedPrefsUtils;
@@ -106,7 +106,7 @@ public class LoginActivity extends BaseSlidingActivity {
                      * 保存用户登录信息
                      */
                     saveUserLoginInfo();
-                    return DigitConnectionFactory.getInstance(LoginActivity.this).doLogin(accountId, accountPassword);
+                    return NetConnectFactory.getInstance(LoginActivity.this).doLogin(userNumber, userPassword);
                 }
             }, new NotifyListener() {
                 @Override

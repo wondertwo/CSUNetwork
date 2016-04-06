@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CSUNetwork</string>
+    <string name="textview_empty">输入不能为空</string>
+    <string name="tip">提示</string>
+    <string name="not_connected_wifi">未连接WIFI</string>
+    <string name="goto_connect">连接</string>
+    <string name="system_exit">退出</string>
 </resources>

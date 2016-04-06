@@ -5,13 +5,13 @@ import android.os.Bundle;
 import com.wondertwo.csunetwork.R;
 
 /**
- * LogoutActivity下线Activity
+ * LogoutActivity下线页
  * Created by wondertwo on 2016/4/3.
  */
-public class LogoutActivity extends BaseActivity {
+public class LogoutActivity extends BaseSlidingActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.wifi_logout_page);
+        setContentView(R.layout.activity_logout_page);
     }
 }

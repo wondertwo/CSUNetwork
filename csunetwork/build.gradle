@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 19
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
         applicationId "com.wondertwo.csunetwork"
@@ -23,5 +23,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
+    compile project(':jsoupLibrary')
     compile project(':SlidingMenuLibrary')
 }

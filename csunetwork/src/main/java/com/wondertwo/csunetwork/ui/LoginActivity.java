@@ -127,18 +127,20 @@ public class LoginActivity extends BaseSlidingActivity {
                             int resultCode = -1;
                             if (jsonObject.has("resultCode") && (resultCode = jsonObject.getInt("resultCode")) < arr.length) {
                                 switch (resultCode) {
-                                    //0代表登陆成功，10代表密码简单，这两种情况都是登陆成功地提示。
+                                    /**
+                                     * 0代表登陆成功，10代表密码简单，这两种情况都是登陆成功地提示。
+                                     */
                                     case 0:
                                     case 10:
                                         ShowToastUtils.showToastLong(LoginActivity.this, R.string.login_success);
-                                        gotoShowResultActivity(jsonObject.toString());
+                                        gotoLoginSuccessActivity(jsonObject.toString());
                                         break;
                                     case 1:
                                         if (jsonObject.has("resultDescribe"))
-                                            showError(jsonObject.getString("resultDescribe"));
+                                            showLoginError(jsonObject.getString("resultDescribe"));
                                         break;
                                     default:
-                                        showError(arr[resultCode]);
+                                        showLoginError(arr[resultCode]);
                                 }
                             } else
                                 showLoginUnknowError();
@@ -151,6 +153,66 @@ public class LoginActivity extends BaseSlidingActivity {
                 }
             });
         }
+    }
+
+    /**
+     * 登录未知错误
+     */
+    protected void showLoginUnknowError() {
+        showLoginError(R.string.unknow_result_login_failed);
+    }
+
+    /**
+     * 登录出错，int
+     */
+    protected void showLoginError(int tip) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.tip)
+                .setMessage(tip)
+                .setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).show();
+    }
+
+    /**
+     * 登录出错，String
+     */
+    protected void showLoginError(String tip) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.tip)
+                .setMessage(tip)
+                .setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).show();
+    }
+
+    /**
+     * 跳转到登录c成功展示页
+     */
+    private void gotoLoginSuccessActivity(String jsonResult) {
+        Intent intent = new Intent();
+        intent.setClass(this, LoginSuccessActivity.class);
+        intent.putExtra(LoginSuccessActivity.INTRNT_EXTRA_NAME, jsonResult);
+        startActivity(intent);
+        this.finish();
     }
 
     /**

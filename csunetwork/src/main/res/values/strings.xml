@@ -5,4 +5,8 @@
     <string name="not_connected_wifi">未连接WIFI</string>
     <string name="goto_connect">连接</string>
     <string name="system_exit">退出</string>
+    <string name="login_success">登陆成功</string>
+    <string name="unknow_result_login_failed">未知原因导致登录失败</string>
+    <string name="cancel">取消</string>
+    <string name="exit">退出</string>
 </resources>

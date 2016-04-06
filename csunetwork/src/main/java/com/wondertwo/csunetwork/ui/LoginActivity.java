@@ -31,10 +31,10 @@ public class LoginActivity extends BaseSlidingActivity {
 
     private String userNumber; // 用户名
     private String userPassword; // 密码
-    public SharedPrefsUtils prefsUtils;
-    private EditText inputUserNumber;
-    private EditText inputUserPassword;
-    private ProgressBar loginLoadingProbar;
+    public SharedPrefsUtils prefsUtils; // SharedPreference工具类对象
+    private EditText inputUserNumber; // 账户
+    private EditText inputUserPassword; // 密码
+    private ProgressBar loginLoadingProbar; // 进度条
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

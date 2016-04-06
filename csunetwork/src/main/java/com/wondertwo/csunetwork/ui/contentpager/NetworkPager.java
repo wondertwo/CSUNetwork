@@ -1,10 +1,8 @@
-package com.wondertwo.csunetwork.ui.pager;
+package com.wondertwo.csunetwork.ui.contentpager;
 
 import android.app.Activity;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.wondertwo.csunetwork.R;
 
@@ -23,12 +21,12 @@ public class NetworkPager extends BaseContentPager {
      */
     @Override
     public void initViews() {
-        mRootView = View.inflate(mActivity, R.layout.base_content_pager, null);
-
+        /*mRootView = View.inflate(mActivity, R.layout.base_content_pager, null);
         tvTitle = (TextView) mRootView.findViewById(R.id.tv_title_text);
-
         // 加载数字中南登录页面布局
-        rlContent = (RelativeLayout) mRootView.findViewById(R.id.rl_login_page);
+        rlContent = (RelativeLayout) mRootView.findViewById(R.id.rl_login_page);*/
+
+        mRootView = View.inflate(mActivity, R.layout.wifi_login_page, null);
 
         btnLeftMenu = (ImageButton) mRootView.findViewById(R.id.ib_left_menu);
         btnLeftMenu.setOnClickListener(new View.OnClickListener() {

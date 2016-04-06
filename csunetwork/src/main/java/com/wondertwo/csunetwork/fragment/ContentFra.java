@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.wondertwo.csunetwork.R;
-import com.wondertwo.csunetwork.ui.pager.BaseContentPager;
-import com.wondertwo.csunetwork.ui.pager.NewsPager;
-import com.wondertwo.csunetwork.ui.pager.NetworkPager;
+import com.wondertwo.csunetwork.ui.contentpager.BaseContentPager;
+import com.wondertwo.csunetwork.ui.contentpager.NewsPager;
+import com.wondertwo.csunetwork.ui.contentpager.NetworkPager;
 
 import java.util.ArrayList;
 
@@ -23,33 +23,37 @@ public class ContentFra extends BaseFragment {
     private RadioGroup rgBottomBar;
     // ViewPager对象
     private ViewPager mViewPager;
-    // 集合mPagerList，接收BasePager对象
+    // 集合mPagerList，接收BaseContentPager对象
     private ArrayList<BaseContentPager> mPagerList;
+    // ContentFragment的布局
+    private View contentView;
 
+    /**
+     * 初始化Fragment的布局
+     */
     @Override
     public View initView() {
-        // 加载ContentFra布局文件
-        View view  = View.inflate(mActivity, R.layout.fragment_content, null);
-
-        rgBottomBar = (RadioGroup) view.findViewById(R.id.rg_bottom_tab);// 拿到RadioGroup对象
-        mViewPager = (ViewPager) view.findViewById(R.id.vp_content);// 拿到ViewPager对象
-
-        return view;
+        rgBottomBar = (RadioGroup) contentView.findViewById(R.id.rg_bottom_tab);// 拿到RadioGroup对象
+        mViewPager = (ViewPager) contentView.findViewById(R.id.vp_content);// 拿到ViewPager对象
+        return contentView;
     }
 
     /**
-     * 初始化contentfragment数据
+     * Fragmnet依附的activity创建，初始化数据
      */
     @Override
     public void initData() {
-        rgBottomBar.check(R.id.rb_net);// 表示默认进入页面是wifi登录页
+        // 在初始化数据时，首先加载ContentFragment布局
+        contentView = View.inflate(mActivity, R.layout.fragment_content_page, null);
+
+        rgBottomBar.check(R.id.rb_net);// 表示默认打开进入wifi登录页
 
         mPagerList = new ArrayList<>();
         mPagerList.add(new NetworkPager(mActivity));
         mPagerList.add(new NewsPager(mActivity));
 
         // ViewPager设置适配器
-        mViewPager.setAdapter(new ContentAdapter());
+        mViewPager.setAdapter(new ContentPagerAdapter());
 
         // 监听RadioGroup的选择事件
         rgBottomBar.setOnCheckedChangeListener(
@@ -98,7 +102,7 @@ public class ContentFra extends BaseFragment {
     /**
      * ViewPager适配器
      */
-    class ContentAdapter extends PagerAdapter {
+    class ContentPagerAdapter extends PagerAdapter {
 
         @Override
         public int getCount() {

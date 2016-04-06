@@ -14,11 +14,11 @@ import android.view.ViewGroup;
  */
 public abstract class BaseFragment extends Fragment {
 
-    // fragment所依附的activity对象
+    // 内容区fragment所依附的context对象activity
     public Activity mActivity;
 
     /**
-     * fragment创建，获取fragment所依附的activity对象
+     * fragment被创建，其次执行，获取fragment所依附的activity对象
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,16 +27,17 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * 创建fragment的布局view
+     * 创建fragment的布局view，最后执行
      */
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
         return initView();
     }
 
     /**
-     * 创建fragment所依附Activity
+     * 创建fragment所依附Activity，最先执行
      */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -45,12 +46,12 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * 初始化view抽象方法
+     * 初始化view方法initView()
      */
-    public abstract View initView();
+    public View initView() { return null; }
 
     /**
-     * 初始化数据
+     * 初始化数据initData()
      */
     public void initData() {}
 }

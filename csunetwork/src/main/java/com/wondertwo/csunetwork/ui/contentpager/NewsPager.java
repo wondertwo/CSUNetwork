@@ -1,4 +1,4 @@
-package com.wondertwo.csunetwork.ui.pager;
+package com.wondertwo.csunetwork.ui.contentpager;
 
 import android.app.Activity;
 import android.graphics.Color;

@@ -34,7 +34,7 @@ public class ShowResultActivity extends BaseNetworkActivity {
 
     private ListView lvLoginResult;
     private ProgressBar logoutWaitingProbar;
-    public static final String INTRNT_EXTRA_NAME = "loginsuccess";
+    public static final String INTRNT_EXTRA_NAME = "result";
     private JSONObject mJsonObject;
     private List<String> mlistData = new ArrayList<String>();
 
@@ -73,8 +73,8 @@ public class ShowResultActivity extends BaseNetworkActivity {
         lvLoginResult.setAdapter(new ListviewAdapter(getApplicationContext(),
                 mlistData, R.layout.list_login_result_item) {
             @Override
-            public void convert(ViewHolder helper, String item) {
-                helper.setText(R.id.list_login_result_item, item);
+            public void convert(ViewHolder helper, Object item) {
+                helper.setText(R.id.list_login_result_item, (String) item);
             }
         });
     }

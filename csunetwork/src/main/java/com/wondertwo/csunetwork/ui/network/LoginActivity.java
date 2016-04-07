@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -106,7 +107,7 @@ public class LoginActivity extends BaseNetworkActivity {
                      * 保存用户登录信息
                      */
                     saveUserLoginInfo();
-                    return NetConnectFactory.getInstance(LoginActivity.this).doLogin(userNumber, userPassword);
+                    return NetConnectFactory.getInstance(LoginActivity.this).doLogin("01" + userNumber, userPassword);
                 }
             }, new NotifyListener() {
                 @Override
@@ -142,12 +143,16 @@ public class LoginActivity extends BaseNetworkActivity {
                                     default:
                                         showError(arr[resultCode]);
                                 }
-                            } else
+                            } else {
+                                Log.e("TAG", "1");
                                 showLoginUnknowError();
+                            }
                         } catch (JSONException e) {
+                            Log.e("TAG", "2");
                             showLoginUnknowError();
                         }
                     } else {
+                        Log.e("TAG", "3");
                         showLoginUnknowError();
                     }
                 }

@@ -1,4 +1,4 @@
-package com.wondertwo.csunetwork.ui;
+package com.wondertwo.csunetwork.ui.network;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,7 +14,7 @@ import com.wondertwo.csunetwork.async.AsyncTaskWarpper;
 import com.wondertwo.csunetwork.async.AsyncWorkResult;
 import com.wondertwo.csunetwork.async.listener.NotifyListener;
 import com.wondertwo.csunetwork.newwork.NetConnectFactory;
-import com.wondertwo.csunetwork.user.UserInfo;
+import com.wondertwo.csunetwork.user.NetworkConstant;
 import com.wondertwo.csunetwork.utils.NetConnectUtils;
 import com.wondertwo.csunetwork.utils.SharedPrefsUtils;
 import com.wondertwo.csunetwork.utils.ShowToastUtils;
@@ -27,14 +27,14 @@ import java.util.concurrent.Callable;
 /**
  * LoginActivity登录页
  */
-public class LoginActivity extends BaseSlidingActivity {
+public class LoginActivity extends BaseNetworkActivity {
 
     private String userNumber; // 用户名
     private String userPassword; // 密码
-    public SharedPrefsUtils prefsUtils; // SharedPreference工具类对象
     private EditText inputUserNumber; // 账户
     private EditText inputUserPassword; // 密码
     private ProgressBar loginLoadingProbar; // 进度条
+    private SharedPrefsUtils sharedPrefsUtils; // SharedPreferences工具类
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class LoginActivity extends BaseSlidingActivity {
         // 设置前景布局
         setContentView(R.layout.activity_login_page);
 
-        prefsUtils = new SharedPrefsUtils(this);
+        sharedPrefsUtils = new SharedPrefsUtils(this);
         inputUserNumber = (EditText) findViewById(R.id.user_number);
         inputUserPassword = (EditText) findViewById(R.id.user_password);
         loginLoadingProbar = (ProgressBar) findViewById(R.id.login_loading_probar);
@@ -137,10 +137,10 @@ public class LoginActivity extends BaseSlidingActivity {
                                         break;
                                     case 1:
                                         if (jsonObject.has("resultDescribe"))
-                                            showLoginError(jsonObject.getString("resultDescribe"));
+                                            showError(jsonObject.getString("resultDescribe"));
                                         break;
                                     default:
-                                        showLoginError(arr[resultCode]);
+                                        showError(arr[resultCode]);
                                 }
                             } else
                                 showLoginUnknowError();
@@ -156,79 +156,20 @@ public class LoginActivity extends BaseSlidingActivity {
     }
 
     /**
-     * 登录未知错误
-     */
-    protected void showLoginUnknowError() {
-        showLoginError(R.string.unknow_result_login_failed);
-    }
-
-    /**
-     * 登录出错，int
-     */
-    protected void showLoginError(int tip) {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.tip)
-                .setMessage(tip)
-                .setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                }).show();
-    }
-
-    /**
-     * 登录出错，String
-     */
-    protected void showLoginError(String tip) {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.tip)
-                .setMessage(tip)
-                .setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                }).show();
-    }
-
-    /**
-     * 跳转到登录c成功展示页
+     * 跳转到登录成功展示页
      */
     private void gotoLoginSuccessActivity(String jsonResult) {
         Intent intent = new Intent();
-        intent.setClass(this, LoginSuccessActivity.class);
-        intent.putExtra(LoginSuccessActivity.INTRNT_EXTRA_NAME, jsonResult);
+        intent.setClass(this, ShowResultActivity.class);
+        intent.putExtra(ShowResultActivity.INTRNT_EXTRA_NAME, jsonResult);
         startActivity(intent);
         this.finish();
     }
 
     /**
-     * saveUserLoginInfo()保存用户登录信息
-     */
-    private void saveUserLoginInfo() {
-        prefsUtils.setValue(UserInfo.SP_USER_NUMBER, userNumber);
-        prefsUtils.setValue(UserInfo.SP_USER_PASSWORD, userPassword);
-    }
-
-    /**
      * 展示进度条showProgressbar()
      */
-    private void showProgressbar() {
-        loginLoadingProbar.setVisibility(View.VISIBLE);
-    }
+    private void showProgressbar() { loginLoadingProbar.setVisibility(View.VISIBLE); }
 
     /**
      * 隐藏进度条dismissProgressbar()
@@ -239,10 +180,18 @@ public class LoginActivity extends BaseSlidingActivity {
      * 填充已保存的用户名和密码
      */
     public void restoreUserInfo() {
-        userNumber = prefsUtils.getValue(UserInfo.SP_USER_NUMBER, "");
-        userPassword = prefsUtils.getValue(UserInfo.SP_USER_PASSWORD, "");
+        userNumber = sharedPrefsUtils.getValue(NetworkConstant.SP_USER_NUMBER, "");
+        userPassword = sharedPrefsUtils.getValue(NetworkConstant.SP_USER_PASSWORD, "");
         inputUserNumber.setText(userNumber);
         inputUserPassword.setText(userPassword);
+    }
+
+    /**
+     * saveUserLoginInfo()保存用户登录信息
+     */
+    private void saveUserLoginInfo() {
+        sharedPrefsUtils.setValue(NetworkConstant.SP_USER_NUMBER, userNumber);
+        sharedPrefsUtils.setValue(NetworkConstant.SP_USER_PASSWORD, userPassword);
     }
 
     /**

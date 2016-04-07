@@ -25,8 +25,7 @@ public class SharedPrefsUtils {
      * 通过文件名创建sp
      */
     public SharedPrefsUtils(Context context, String filename) {
-        this(context, context.getSharedPreferences(filename,
-                Context.MODE_WORLD_WRITEABLE));
+        this(context, context.getSharedPreferences(filename, Context.MODE_WORLD_WRITEABLE));
     }
 
     /**
@@ -35,7 +34,7 @@ public class SharedPrefsUtils {
     public SharedPrefsUtils(Context context, SharedPreferences sp) {
         this.context = context;
         this.sp = sp;
-        this.editor = sp.edit();
+        editor = sp.edit();
     }
 
     public SharedPreferences getSPInstance() {

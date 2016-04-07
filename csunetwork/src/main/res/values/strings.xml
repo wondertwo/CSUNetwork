@@ -9,4 +9,9 @@
     <string name="unknow_result_login_failed">未知原因导致登录失败</string>
     <string name="cancel">取消</string>
     <string name="exit">退出</string>
+    <string name="logout_success">下线成功</string>
+    <string name="unknow_result_logout_failed">未知结果登录失败</string>
+    <string name="about_learn_more">了解更多</string>
+    <string name="goto_author_blog">作者博客</string>
+    <string name="goto_app_github">Github</string>
 </resources>

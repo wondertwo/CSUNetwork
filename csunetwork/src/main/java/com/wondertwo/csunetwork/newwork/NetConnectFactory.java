@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.wondertwo.csunetwork.user.UserInfo;
+import com.wondertwo.csunetwork.user.NetworkConstant;
 import com.wondertwo.csunetwork.utils.UserApplication;
 
 import org.apache.http.HttpEntity;
@@ -96,8 +96,8 @@ public class NetConnectFactory {
      * 下线
      */
     public String doLogout() {
-        String brasAddress = UserApplication.getSpUtil().getValue(UserInfo.SP_USER_BRAS_ADDRESS, "");
-        String userIntranetAddress = UserApplication.getSpUtil().getValue(UserInfo.SP_USER_INTRANET_ADDRESS, "");
+        String brasAddress = UserApplication.getSpUtil().getValue(NetworkConstant.SP_USER_BRAS_ADDRESS, "");
+        String userIntranetAddress = UserApplication.getSpUtil().getValue(NetworkConstant.SP_USER_INTRANET_ADDRESS, "");
         if (TextUtils.isEmpty(brasAddress) || TextUtils.isEmpty(userIntranetAddress)) {
             return "";
         }
@@ -167,8 +167,8 @@ public class NetConnectFactory {
                 System.out.println(userIntranetAddress + "    " + brasAddress);
                 addresses.add(new BasicNameValuePair("userIntranetAddress", userIntranetAddress));
                 addresses.add(new BasicNameValuePair("brasAddress", brasAddress));
-                UserApplication.getSpUtil().setValue(UserInfo.SP_USER_BRAS_ADDRESS, brasAddress);
-                UserApplication.getSpUtil().setValue(UserInfo.SP_USER_INTRANET_ADDRESS, userIntranetAddress);
+                UserApplication.getSpUtil().setValue(NetworkConstant.SP_USER_BRAS_ADDRESS, brasAddress);
+                UserApplication.getSpUtil().setValue(NetworkConstant.SP_USER_INTRANET_ADDRESS, userIntranetAddress);
             }
 
         } catch (Exception e) {

@@ -11,6 +11,8 @@ public class AsyncTaskWarpper {
 
     private static AsyncTaskWarpper asyncTaskWarpper;
 
+    private AsyncTaskWarpper() { }
+
     public static synchronized AsyncTaskWarpper getATWInstance() {
         if (null == asyncTaskWarpper) {
             asyncTaskWarpper = new AsyncTaskWarpper();
@@ -18,10 +20,9 @@ public class AsyncTaskWarpper {
         return asyncTaskWarpper;
     }
 
-    private AsyncTaskWarpper() { }
-
     public AsyncTaskWork doAsyncWork(final Runnable work,
-                                     NotifyListener cancelListener, NotifyListener finishListener) {
+                                     NotifyListener cancelListener,
+                                     NotifyListener finishListener) {
         AsyncTaskWork asyncWork = new AsyncTaskWork(new Callable<Object>() {
 
             @Override
@@ -35,22 +36,17 @@ public class AsyncTaskWarpper {
     }
 
     public AsyncTaskWork doAsyncWork(final Callable<Object> work,
-                                     NotifyListener cancelListener, NotifyListener finishListener) {
+                                     NotifyListener cancelListener,
+                                     NotifyListener finishListener) {
         AsyncTaskWork asyncWork = new AsyncTaskWork(work, true,
                 cancelListener, finishListener);
         asyncWork.executeTask();
         return asyncWork;
     }
 
-    public AsyncTaskWork doNotCancelableAsyncWork(final Callable<Object> work,
-                                                  NotifyListener finishListener) {
-        AsyncTaskWork asyncWork = new AsyncTaskWork(work, false, finishListener);
-        asyncWork.executeTask();
-        return asyncWork;
-    }
-
     public AsyncTaskWork doAsyncWork(final Runnable work,
-                                     NotifyListener cancelListener, NotifyListener progresslListener,
+                                     NotifyListener cancelListener,
+                                     NotifyListener progresslListener,
                                      NotifyListener finishListener) {
         AsyncTaskWork asyncWork = new AsyncTaskWork(new Callable<Object>() {
 
@@ -65,10 +61,18 @@ public class AsyncTaskWarpper {
     }
 
     public AsyncTaskWork doAsyncWork(final Callable<Object> work,
-                                     NotifyListener cancelListener, NotifyListener progresslListener,
+                                     NotifyListener cancelListener,
+                                     NotifyListener progresslListener,
                                      NotifyListener finishListener) {
         AsyncTaskWork asyncWork = new AsyncTaskWork(work, true,
                 cancelListener, progresslListener, finishListener);
+        asyncWork.executeTask();
+        return asyncWork;
+    }
+
+    public AsyncTaskWork doNotCancelableAsyncWork(final Callable<Object> work,
+                                                  NotifyListener finishListener) {
+        AsyncTaskWork asyncWork = new AsyncTaskWork(work, false, finishListener);
         asyncWork.executeTask();
         return asyncWork;
     }

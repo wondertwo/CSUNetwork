@@ -27,6 +27,7 @@ import java.util.concurrent.Callable;
 
 /**
  * LoginActivity登录页
+ * Created by wondertwo on 2016/4/5.
  */
 public class LoginPageActivity extends BaseNetworkActivity {
 

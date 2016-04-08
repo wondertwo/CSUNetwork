@@ -28,7 +28,7 @@ import java.util.concurrent.Callable;
 /**
  * LoginActivity登录页
  */
-public class LoginActivity extends BaseNetworkActivity {
+public class LoginPageActivity extends BaseNetworkActivity {
 
     private String userNumber; // 用户名
     private String userPassword; // 密码
@@ -90,7 +90,7 @@ public class LoginActivity extends BaseNetworkActivity {
                     .setNegativeButton(R.string.system_exit, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            LoginActivity.this.finish();
+                            LoginPageActivity.this.finish();
                         }
                     }).show();
         } else {
@@ -107,12 +107,12 @@ public class LoginActivity extends BaseNetworkActivity {
                      * 保存用户登录信息
                      */
                     saveUserLoginInfo();
-                    return NetConnectFactory.getInstance(LoginActivity.this).doLogin("01" + userNumber, userPassword);
+                    return NetConnectFactory.getNCFInstance(LoginPageActivity.this).doLogin(userNumber, userPassword);
                 }
             }, new NotifyListener() {
                 @Override
                 public void onNotify(Object result) {
-                    ShowToastUtils.showToastLong(LoginActivity.this, "取消");
+                    ShowToastUtils.showToastLong(LoginPageActivity.this, "取消");
                 }
             }, new NotifyListener() {
                 //登陆后的回调
@@ -120,6 +120,7 @@ public class LoginActivity extends BaseNetworkActivity {
                 public void onNotify(Object result) {
                     dismissProgressbar();
                     AsyncWorkResult ar = (AsyncWorkResult) result;
+                    Log.e("TAG", "4");
                     //有返回结果的情况
                     if (!TextUtils.isEmpty((String) ar.getArgs()[0])) {
                         try {
@@ -133,12 +134,13 @@ public class LoginActivity extends BaseNetworkActivity {
                                      */
                                     case 0:
                                     case 10:
-                                        ShowToastUtils.showToastLong(LoginActivity.this, R.string.login_success);
-                                        gotoLoginSuccessActivity(jsonObject.toString());
+                                        ShowToastUtils.showToastLong(LoginPageActivity.this, R.string.login_success);
+                                        gotoShowResultActivity(jsonObject.toString());
                                         break;
                                     case 1:
-                                        if (jsonObject.has("resultDescribe"))
+                                        if (jsonObject.has("resultDescribe")) {
                                             showError(jsonObject.getString("resultDescribe"));
+                                        }
                                         break;
                                     default:
                                         showError(arr[resultCode]);
@@ -163,9 +165,8 @@ public class LoginActivity extends BaseNetworkActivity {
     /**
      * 跳转到登录成功展示页
      */
-    private void gotoLoginSuccessActivity(String jsonResult) {
-        Intent intent = new Intent();
-        intent.setClass(this, ShowResultActivity.class);
+    private void gotoShowResultActivity(String jsonResult) {
+        Intent intent = new Intent(this, ShowResultActivity.class);
         intent.putExtra(ShowResultActivity.INTRNT_EXTRA_NAME, jsonResult);
         startActivity(intent);
         this.finish();

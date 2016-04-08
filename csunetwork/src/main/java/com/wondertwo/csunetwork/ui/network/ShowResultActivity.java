@@ -87,7 +87,7 @@ public class ShowResultActivity extends BaseNetworkActivity {
         AsyncTaskWarpper.getATWInstance().doAsyncWork(new Callable<Object>() {
             @Override
             public Object call() throws Exception {
-                return NetConnectFactory.getInstance(ShowResultActivity.this).doLogout();
+                return NetConnectFactory.getNCFInstance(ShowResultActivity.this).doLogout();
             }
         }, new NotifyListener() {
             @Override
@@ -166,7 +166,7 @@ public class ShowResultActivity extends BaseNetworkActivity {
      * 跳转到LoginActivity
      */
     private void gotoLoginActivity() {
-        Intent intent = new Intent(ShowResultActivity.this, LoginActivity.class);
+        Intent intent = new Intent(ShowResultActivity.this, LoginPageActivity.class);
         startActivity(intent);
         this.finish();
     }

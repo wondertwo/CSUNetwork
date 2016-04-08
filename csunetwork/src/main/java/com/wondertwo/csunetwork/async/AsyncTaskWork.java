@@ -119,9 +119,7 @@ public class AsyncTaskWork extends AdaptiveAsyncTask<Void, Object, Object> {
         return State.DONE.equals(state);
     }
 
-    public boolean isAbort() {
-        return State.ABORT.equals(state);
-    }
+    public boolean isAbort() { return State.ABORT.equals(state); }
 
     public boolean isRunning() {
         return State.RUNNING.equals(state);
@@ -135,7 +133,6 @@ public class AsyncTaskWork extends AdaptiveAsyncTask<Void, Object, Object> {
             this.state = state;
         }
     }
-
 
     @Override
     protected void onPostExecute(Object result) {

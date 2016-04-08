@@ -42,7 +42,7 @@ public class NetConnectFactory {
     private final String LOGOUT_POST_URL = "http://61.137.86.87:8080/portalNat444/AccessServices/logout?";
     private final String LOGOUT_PEFER = "http://61.137.86.87:8080/portalNat444/main2.jsp";
 
-    public static NetConnectFactory getInstance(Context context) {
+    public static NetConnectFactory getNCFInstance(Context context) {
         if (instance == null) {
             instance = new NetConnectFactory(context);
         }

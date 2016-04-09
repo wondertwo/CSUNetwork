@@ -32,8 +32,8 @@ import java.util.concurrent.Callable;
  */
 public class ShowResultActivity extends BaseNetworkActivity {
 
-    private ListView lvLoginResult;
-    private ProgressBar logoutWaitingProbar;
+    private ListView lvLoginResult; // 登录结果展示
+    private ProgressBar logoutWaitingProbar; // 下线等待进度条
     public static final String INTRNT_EXTRA_NAME = "result";
     private JSONObject mJsonObject;
     private List<String> mlistData = new ArrayList<String>();
@@ -41,6 +41,7 @@ public class ShowResultActivity extends BaseNetworkActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 设置前景布局
         setContentView(R.layout.activity_show_result);
 
         lvLoginResult = (ListView) findViewById(R.id.lv_login_success);
@@ -56,7 +57,7 @@ public class ShowResultActivity extends BaseNetworkActivity {
     private void initData() {
         try {
             mJsonObject = new JSONObject(getIntent().getStringExtra(INTRNT_EXTRA_NAME));
-            mlistData.add("账户总流量: " + mJsonObject.getInt("totalflow") + "MB");
+            mlistData.add("账户流量: " + mJsonObject.getInt("totalflow") + "MB");
             mlistData.add("已用流量: " + mJsonObject.getInt("usedflow") + "MB");
             mlistData.add("剩余流量: " + mJsonObject.getInt("surplusflow") + "MB");
             mlistData.add("剩余金额: " + mJsonObject.getDouble("surplusmoney") + "元");
@@ -82,7 +83,7 @@ public class ShowResultActivity extends BaseNetworkActivity {
     /**
      * 下线方法和LoginActivity的下线方法有重复代码，下期重构掉或者统一下线入口
      */
-    public void onLogoutBtnClicked(View view) {
+    public void onLogoutButtonClicked(View view) {
         showProgressbar();
         AsyncTaskWarpper.getATWInstance().doAsyncWork(new Callable<Object>() {
             @Override
@@ -108,7 +109,7 @@ public class ShowResultActivity extends BaseNetworkActivity {
                             switch (resultCode) {
                                 case 0:
                                     ShowToastUtils.showToastLong(ShowResultActivity.this, R.string.logout_success);
-                                    gotoLoginActivity();
+                                    gotoLoginPageActivity();
                                     break;
                                 default:
                                     showError(arr[resultCode]);
@@ -126,9 +127,9 @@ public class ShowResultActivity extends BaseNetworkActivity {
     }
 
     /**
-     * “关于”文本框点击事件
+     * “关于app”图片按钮点击事件
      */
-    public void onAboutClicked(View view) {
+    public void onAppAboutIconClicked(View view) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.tip)
                 .setMessage(R.string.about_learn_more)
@@ -151,7 +152,7 @@ public class ShowResultActivity extends BaseNetworkActivity {
      */
     private void dismissProgressbar() {
         if (logoutWaitingProbar != null && logoutWaitingProbar.isShown()) {
-            logoutWaitingProbar.setVisibility(View.GONE);
+            logoutWaitingProbar.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -163,9 +164,9 @@ public class ShowResultActivity extends BaseNetworkActivity {
     }
 
     /**
-     * 跳转到LoginActivity
+     * 跳转到LoginPageActivity
      */
-    private void gotoLoginActivity() {
+    private void gotoLoginPageActivity() {
         Intent intent = new Intent(ShowResultActivity.this, LoginPageActivity.class);
         startActivity(intent);
         this.finish();

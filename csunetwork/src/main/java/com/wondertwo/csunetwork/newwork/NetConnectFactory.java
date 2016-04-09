@@ -4,8 +4,8 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.wondertwo.csunetwork.ui.network.BaseNetworkActivity;
 import com.wondertwo.csunetwork.user.NetworkConstant;
-import com.wondertwo.csunetwork.utils.UserApplication;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -33,25 +33,25 @@ import java.util.List;
  */
 public class NetConnectFactory {
 
-    public static NetConnectFactory instance = null;
+    public static NetConnectFactory netConnectFactory = null;
     private Context context;
-    private DefaultHttpClient httpClient;
+    private DefaultHttpClient defaultHttpClient;
 
     private final String LOGIN_POST_URL = "http://61.137.86.87:8080/portalNat444/AccessServices/login";
     private final String LOGIN_PEFER = "http://61.137.86.87:8080/portalNat444/index.jsp";
     private final String LOGOUT_POST_URL = "http://61.137.86.87:8080/portalNat444/AccessServices/logout?";
     private final String LOGOUT_PEFER = "http://61.137.86.87:8080/portalNat444/main2.jsp";
 
-    public static NetConnectFactory getNCFInstance(Context context) {
-        if (instance == null) {
-            instance = new NetConnectFactory(context);
-        }
-        return instance;
-    }
-
     public NetConnectFactory(Context context) {
         this.context = context;
-        httpClient = new DefaultHttpClient();
+        defaultHttpClient = new DefaultHttpClient();
+    }
+
+    public static NetConnectFactory getNCFInstance(Context context) {
+        if (netConnectFactory == null) {
+            netConnectFactory = new NetConnectFactory(context);
+        }
+        return netConnectFactory;
     }
 
     /**
@@ -62,7 +62,7 @@ public class NetConnectFactory {
     }
 
     /**
-     * 登陆
+     * 加密登陆
      */
     public String doLoginWithEncryptedPassword(String id, String password) {
         HttpResponse response = null;
@@ -77,7 +77,7 @@ public class NetConnectFactory {
             try {
                 httpPost.setEntity(new UrlEncodedFormEntity(postData));
                 httpPost.setHeader(new BasicHeader("Referer", LOGIN_PEFER));
-                response = httpClient.execute(httpPost);
+                response = defaultHttpClient.execute(httpPost);
                 entity = response.getEntity();
                 result = EntityUtils.toString(entity, "UTF-8");
                 Log.d("TAG", result);
@@ -96,8 +96,8 @@ public class NetConnectFactory {
      * 下线
      */
     public String doLogout() {
-        String brasAddress = UserApplication.getSpUtil().getValue(NetworkConstant.SP_USER_BRAS_ADDRESS, "");
-        String userIntranetAddress = UserApplication.getSpUtil().getValue(NetworkConstant.SP_USER_INTRANET_ADDRESS, "");
+        String brasAddress = BaseNetworkActivity.getSpUtil().getValue(NetworkConstant.SP_USER_BRAS_ADDRESS, "");
+        String userIntranetAddress = BaseNetworkActivity.getSpUtil().getValue(NetworkConstant.SP_USER_INTRANET_ADDRESS, "");
         if (TextUtils.isEmpty(brasAddress) || TextUtils.isEmpty(userIntranetAddress)) {
             return "";
         }
@@ -112,7 +112,7 @@ public class NetConnectFactory {
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(values));
             httpPost.setHeader(new BasicHeader("Referer", LOGOUT_PEFER));
-            responses = httpClient.execute(httpPost);
+            responses = defaultHttpClient.execute(httpPost);
             entity = responses.getEntity();
             result = EntityUtils.toString(entity, "UTF-8");
             if (null == entity)
@@ -150,13 +150,13 @@ public class NetConnectFactory {
     /**
      * 此方法有两个用途：
      * 1. 可以获取userIntranetAddress和brasAddress两个参数
-     * 2. 可以使用getAddress()！=null来判断当前已连接数字中南并且没有登录,但注意需要在非ui线程中调用
+     * 2. 可以使用getAddress()！= null来判断当前已连接数字中南并且没有登录,但注意需要在非ui线程中调用
      */
     public ArrayList<NameValuePair> getAddress() {
         HttpGet httpGet = new HttpGet("http://www.baidu.com");
         ArrayList<NameValuePair> addresses = new ArrayList<NameValuePair>();
         try {
-            HttpResponse response = httpClient.execute(httpGet);
+            HttpResponse response = defaultHttpClient.execute(httpGet);
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 String html = EntityUtils.toString(entity, "UTF-8");
@@ -167,8 +167,8 @@ public class NetConnectFactory {
                 System.out.println(userIntranetAddress + "    " + brasAddress);
                 addresses.add(new BasicNameValuePair("userIntranetAddress", userIntranetAddress));
                 addresses.add(new BasicNameValuePair("brasAddress", brasAddress));
-                UserApplication.getSpUtil().setValue(NetworkConstant.SP_USER_BRAS_ADDRESS, brasAddress);
-                UserApplication.getSpUtil().setValue(NetworkConstant.SP_USER_INTRANET_ADDRESS, userIntranetAddress);
+                BaseNetworkActivity.getSpUtil().setValue(NetworkConstant.SP_USER_BRAS_ADDRESS, brasAddress);
+                BaseNetworkActivity.getSpUtil().setValue(NetworkConstant.SP_USER_INTRANET_ADDRESS, userIntranetAddress);
             }
 
         } catch (Exception e) {

@@ -1,63 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".ui.network.ShowResultActivity"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.network.ShowResultActivity">
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_about_the_app"
+        android:onClick="onAppAboutIconClicked"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal" />
 
     <ProgressBar
         android:id="@+id/logout_waiting_probar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:visibility="gone" />
+        android:visibility="invisible" />
 
     <ListView
         android:id="@+id/lv_login_success"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logout_waiting_probar"
-        android:layout_marginTop="30dp"
-        android:background="@android:color/white"
-        android:cacheColorHint="#00000000"
-        android:choiceMode="singleChoice"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/holo_blue_dark"
+        android:minHeight="30dp"
         android:divider="@android:color/holo_red_dark"
         android:dividerHeight="1dp"
         android:drawSelectorOnTop="false"
         android:minWidth="18dp" />
 
-    <RelativeLayout
+    <Button
+        android:id="@+id/btn_logout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lv_login_success"
-        android:layout_centerHorizontal="true"
-        android:padding="15dp"
-        android:paddingTop="20dp">
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:onClick="onLogoutButtonClicked"
+        android:text="下线"
+        android:textColor="@android:color/black"
+        android:textSize="22sp" />
 
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="下线"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            android:onClick="onLogoutBtnClicked"
-            />
-
-        <TextView
-            android:id="@+id/tv_about_app"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_logout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:text="关于"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            android:onClick="onAboutClicked"
-            />
-    </RelativeLayout>
-
-</RelativeLayout>
+</LinearLayout>

@@ -7,47 +7,55 @@ import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
 /**
- * Created by wondertwo on 2016/4/6.
+ * Created by wondertwo on 2016/4/9.
  */
-public class SharedPrefsUtils {
+public class SharedPreferUtils {
     private Context context;
     private SharedPreferences sp = null;
-    private SharedPreferences.Editor editor = null;
+    private SharedPreferences.Editor edit = null;
 
     /**
      * 创建默认sp
+     *
+     * @param context
      */
-    public SharedPrefsUtils(Context context) {
+    public SharedPreferUtils(Context context) {
         this(context, PreferenceManager.getDefaultSharedPreferences(context));
     }
 
     /**
      * 通过文件名创建sp
+     *
+     * @param context
+     * @param filename
      */
-    public SharedPrefsUtils(Context context, String filename) {
-        this(context, context.getSharedPreferences(filename, Context.MODE_WORLD_WRITEABLE));
+    public SharedPreferUtils(Context context, String filename) {
+        this(context, context.getSharedPreferences(filename,
+                Context.MODE_WORLD_WRITEABLE));
     }
 
     /**
      * 通过sp创建sp
+     *
+     * @param context
+     * @param sp
      */
-    public SharedPrefsUtils(Context context, SharedPreferences sp) {
+    public SharedPreferUtils(Context context, SharedPreferences sp) {
         this.context = context;
         this.sp = sp;
-        editor = sp.edit();
+        edit = sp.edit();
     }
 
     public SharedPreferences getSPInstance() {
         return sp;
     }
 
-    /**
-     * Setter
-     */
+    // Set
+
     // Boolean
     public void setValue(String key, boolean value) {
-        editor.putBoolean(key, value);
-        editor.commit();
+        edit.putBoolean(key, value);
+        edit.commit();
     }
 
     public void setValue(int resKey, boolean value) {
@@ -56,8 +64,8 @@ public class SharedPrefsUtils {
 
     // Float
     public void setValue(String key, float value) {
-        editor.putFloat(key, value);
-        editor.commit();
+        edit.putFloat(key, value);
+        edit.commit();
     }
 
     public void setValue(int resKey, float value) {
@@ -66,8 +74,8 @@ public class SharedPrefsUtils {
 
     // Integer
     public void setValue(String key, int value) {
-        editor.putInt(key, value);
-        editor.commit();
+        edit.putInt(key, value);
+        edit.commit();
     }
 
     public void setValue(int resKey, int value) {
@@ -76,8 +84,8 @@ public class SharedPrefsUtils {
 
     // Long
     public void setValue(String key, long value) {
-        editor.putLong(key, value);
-        editor.commit();
+        edit.putLong(key, value);
+        edit.commit();
     }
 
     public void setValue(int resKey, long value) {
@@ -86,17 +94,16 @@ public class SharedPrefsUtils {
 
     // String
     public void setValue(String key, String value) {
-        editor.putString(key, value);
-        editor.commit();
+        edit.putString(key, value);
+        edit.commit();
     }
 
     public void setValue(int resKey, String value) {
         setValue(this.context.getString(resKey), value);
     }
 
-    /**
-     * Getter
-     */
+    // Get
+
     // Boolean
     public boolean getValue(String key, boolean defaultValue) {
         return sp.getBoolean(key, defaultValue);
@@ -142,24 +149,24 @@ public class SharedPrefsUtils {
         return getValue(this.context.getString(resKey), defaultValue);
     }
 
-    /**
-     * Delete
-     */
+    // Delete
     public void remove(String key) {
-        editor.remove(key);
-        editor.commit();
+        edit.remove(key);
+        edit.commit();
     }
 
     public void clear() {
-        editor.clear();
-        editor.commit();
+        edit.clear();
+        edit.commit();
     }
 
     /**
-     * 判断是否第一次启动应用
+     * 是否第一次启动应用
+     *
+     * @return
      */
     public boolean isFirstStart() {
-        if (sp == null) {
+        if(sp == null){
             return true;
         }
         try {
@@ -168,29 +175,31 @@ public class SharedPrefsUtils {
             int curVersion = info.versionCode;
             int lastVersion = getValue("version", 0);
             if (curVersion > lastVersion) {
-                /**
-                 * 如果当前版本大于上次版本，该版本属于第一次启动
-                 * 将当前版本写入preference中，则下次启动的时候，据此判断，不再为首次启动
-                 */
-                setValue("version", curVersion);
+                // 如果当前版本大于上次版本，该版本属于第一次启动
+                // 将当前版本写入preference中，则下次启动的时候，据此判断，不再为首次启动
+                setValue("version",curVersion);
                 return true;
             } else {
                 return false;
             }
         } catch (PackageManager.NameNotFoundException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
         return false;
     }
 
     /**
      * 是否第一次安装应用
+     *
+     * @param context
+     * @return
      */
     public boolean isFirstInstall(Context context) {
         int install = getValue("first_install", 0);
-        if (install == 0) {
+        if (install == 0)
             return true;
-        }
         setValue("first_install", 1);
         return false;
     }

@@ -1,28 +1,42 @@
 package com.wondertwo.csunetwork.ui.network;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.view.View;
 
 import com.wondertwo.csunetwork.R;
 import com.wondertwo.csunetwork.ui.BaseSlidingActivity;
+import com.wondertwo.csunetwork.utils.SharedPreferUtils;
 
 /**
  * BaseNetworkActivity网络登录基类
  * Created by wondertwo on 2016/4/7.
  */
 public class BaseNetworkActivity extends BaseSlidingActivity {
+
+    /*private static BaseNetworkActivity baseNetworkActivity;*/
+    private static SharedPreferUtils sharedPreferUtils;
+
+    public BaseNetworkActivity() {}
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferUtils = new SharedPreferUtils(this);
     }
 
-    @Override
-    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-        return super.onCreateView(parent, name, context, attrs);
+    /*public synchronized static BaseNetworkActivity getInstance() {
+        if (null == baseNetworkActivity) {
+            baseNetworkActivity = new BaseNetworkActivity();
+        }
+        return baseNetworkActivity;
+    }*/
+
+    /**
+     * 获取SharedPreferences工具类对象
+     */
+    public static SharedPreferUtils getSpUtil(){
+        return sharedPreferUtils;
     }
 
     /**
@@ -52,7 +66,7 @@ public class BaseNetworkActivity extends BaseSlidingActivity {
 
                     }
                 })
-                .setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.system_exit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
@@ -73,7 +87,7 @@ public class BaseNetworkActivity extends BaseSlidingActivity {
 
                     }
                 })
-                .setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.system_exit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();

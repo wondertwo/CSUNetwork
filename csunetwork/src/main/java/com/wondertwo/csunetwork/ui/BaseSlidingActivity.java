@@ -23,6 +23,6 @@ public class BaseSlidingActivity extends SlidingActivity {
         SlidingMenu slidingMenu = getSlidingMenu();
         slidingMenu.setTouchModeAbove(slidingMenu.TOUCHMODE_FULLSCREEN);// 侧滑模式为全屏触摸
         // 设置屏幕预留宽度
-        slidingMenu.setBehindOffset(160);
+        slidingMenu.setBehindOffset(getWindowManager().getDefaultDisplay().getWidth() * 2 / 5);
     }
 }

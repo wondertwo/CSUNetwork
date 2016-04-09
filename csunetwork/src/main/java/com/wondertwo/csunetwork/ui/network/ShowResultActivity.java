@@ -133,16 +133,16 @@ public class ShowResultActivity extends BaseNetworkActivity {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.tip)
                 .setMessage(R.string.about_learn_more)
-                .setPositiveButton(R.string.goto_author_blog, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        openBrowser("http://www.cnblogs.com/wondertwo/");
-                    }
-                })
-                .setNegativeButton(R.string.goto_app_github, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.goto_app_github, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         openBrowser("https://github.com/wondertwo/CSUNetwork/");
+                    }
+                })
+                .setNegativeButton(R.string.goto_author_blog, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        openBrowser("http://www.cnblogs.com/wondertwo/");
                     }
                 }).show();
     }

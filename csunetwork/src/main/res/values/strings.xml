@@ -1,11 +1,10 @@
 <resources>
 
-    <string name="app_name">CSUNetwork</string>
+    <string name="app_name">小猿</string>
     <string name="tip">提示</string>
     <string name="system_exit">退出</string>
 
     <!--LoginPageActivity-->
-
     <string name="textview_empty">输入不能为空</string>
     <string name="not_connected_wifi">你暂未连接WIFI</string>
     <string name="goto_connect">连接</string>
@@ -20,7 +19,7 @@
     <string name="cancel">取消</string>
     <string name="about_learn_more">了解更多信息？</string>
     <string name="goto_author_blog">作者博客</string>
-    <string name="goto_app_github">Github</string>
+    <string name="goto_app_github">应用源码</string>
 
 
     <string-array name="login_tip">
@@ -34,18 +33,18 @@
         <item>服务器网络连接异常</item>
         <item>认证服务脚本执行异常</item>
         <item>校验码错误</item>
-        <item>您的密码相对简单，帐号存在被盗风险，请及时修改成强度高的密码</item>
-        <item>无法获取您的网络地址,请确定您连接了数字中南的路由</item>
-        <item>无法获取您接入点设备地址,请确定您连接了数字中南的路由</item>
-        <item>无法获取您套餐信息</item>
-        <item>未知原因，登录失败</item>
+        <item>你的密码相对简单，帐号存在被盗风险，请及时修改</item>
+        <item>无法获取网络地址,请确定已连接数字中南</item>
+        <item>无法获取接入地址,请确定已连接数字中南</item>
+        <item>无法获取你套餐信息</item>
+        <item>未知原因导致登录失败</item>
     </string-array>
 
     <string-array name="logout_tip">
         <item>下线成功</item>
         <item>服务器拒绝请求</item>
         <item>下线请求执行失败</item>
-        <item>您已经下线</item>
+        <item>你已经下线</item>
         <item>服务器响应超时</item>
         <item>后台网络连接异常</item>
         <item>服务脚本执行异常</item>

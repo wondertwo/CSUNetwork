@@ -23,6 +23,10 @@
         </activity>
         <activity android:name=".ui.network.ShowResultActivity" />
         <activity android:name=".ui.network.LoginPageActivity" />
+        <activity android:name=".ui.wechat.WechatPageActivity" />
+        <activity android:name=".ui.weibo.WeiboPageActivity" />
+        <activity android:name=".ui.userinfo.UserLoginActivity" />
+        <activity android:name=".ui.setting.SettingPageActivity" />
     </application>
 
 </manifest>

@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.wondertwo.csunetwork.ui.network.BaseNetworkActivity;
-import com.wondertwo.csunetwork.user.NetworkConstant;
+import com.wondertwo.csunetwork.constant.NetworkConstant;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

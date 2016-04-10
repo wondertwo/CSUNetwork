@@ -1,4 +1,4 @@
-package com.wondertwo.csunetwork.user;
+package com.wondertwo.csunetwork.constant;
 
 /**
  * NetworkConstant类，用来记录用户数据

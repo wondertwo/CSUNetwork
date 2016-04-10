@@ -14,7 +14,7 @@ import com.wondertwo.csunetwork.async.AsyncTaskWarpper;
 import com.wondertwo.csunetwork.async.AsyncWorkResult;
 import com.wondertwo.csunetwork.async.listener.NotifyListener;
 import com.wondertwo.csunetwork.newwork.NetConnectFactory;
-import com.wondertwo.csunetwork.user.NetworkConstant;
+import com.wondertwo.csunetwork.constant.NetworkConstant;
 import com.wondertwo.csunetwork.utils.NetConnectUtils;
 import com.wondertwo.csunetwork.utils.ShowToastUtils;
 

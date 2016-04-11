@@ -7,10 +7,11 @@ import com.wondertwo.csunetwork.R;
 /**
  * Created by wondertwo on 2016/4/10.
  */
-public class WechatPageActivity extends BaseWechatActivity {
+public class WechatContentActivity extends BaseWechatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wechat_page);
+        setContentView(R.layout.activity_wechat_content);
     }
+
 }

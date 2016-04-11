@@ -170,7 +170,6 @@ public class NetConnectFactory {
                 BaseNetworkActivity.getSpUtil().setValue(NetworkConstant.SP_USER_BRAS_ADDRESS, brasAddress);
                 BaseNetworkActivity.getSpUtil().setValue(NetworkConstant.SP_USER_INTRANET_ADDRESS, userIntranetAddress);
             }
-
         } catch (Exception e) {
             return null;
         }

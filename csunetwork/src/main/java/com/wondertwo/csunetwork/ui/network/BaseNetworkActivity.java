@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.wondertwo.csunetwork.R;
 import com.wondertwo.csunetwork.ui.BaseSlidingActivity;
 import com.wondertwo.csunetwork.utils.SharedPreferUtils;
+import com.wondertwo.csunetwork.utils.SystemBarUtils;
 
 /**
  * BaseNetworkActivity网络登录基类
@@ -23,6 +24,12 @@ public class BaseNetworkActivity extends BaseSlidingActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferUtils = new SharedPreferUtils(this);
+
+        /**
+         * 适配透明状态栏
+         */
+        /*SystemBarUtils.setStatusBarColor(this, SystemBarUtils.COLOR_DEFAULT_ORANGE);*/
+        SystemBarUtils.setStatusBarColor(this);
     }
 
     /*public synchronized static BaseNetworkActivity getInstance() {

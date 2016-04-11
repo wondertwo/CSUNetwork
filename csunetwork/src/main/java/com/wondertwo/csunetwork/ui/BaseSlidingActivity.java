@@ -13,7 +13,7 @@ import com.wondertwo.csunetwork.R;
 import com.wondertwo.csunetwork.ui.network.LoginPageActivity;
 import com.wondertwo.csunetwork.ui.setting.SettingPageActivity;
 import com.wondertwo.csunetwork.ui.userinfo.UserLoginActivity;
-import com.wondertwo.csunetwork.ui.wechat.WechatPageActivity;
+import com.wondertwo.csunetwork.ui.wechat.WechatListActivity;
 import com.wondertwo.csunetwork.ui.weibo.WeiboPageActivity;
 
 /**
@@ -36,7 +36,7 @@ public class BaseSlidingActivity extends SlidingActivity {
         setBehindContentView(R.layout.activity_sliding_menu);
         // 获取侧边栏对象
         SlidingMenu slidingMenu = getSlidingMenu();
-        slidingMenu.setTouchModeAbove(slidingMenu.TOUCHMODE_FULLSCREEN);// 侧滑模式为全屏触摸
+        slidingMenu.setTouchModeAbove(slidingMenu.TOUCHMODE_NONE);// 侧滑模式
         // 设置屏幕预留宽度
         slidingMenu.setBehindOffset(getWindowManager().getDefaultDisplay().getWidth() * 2 / 5);
 
@@ -69,7 +69,7 @@ public class BaseSlidingActivity extends SlidingActivity {
         llSlidingWechat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BaseSlidingActivity.this, WechatPageActivity.class));
+                startActivity(new Intent(BaseSlidingActivity.this, WechatListActivity.class));
             }
         });
 

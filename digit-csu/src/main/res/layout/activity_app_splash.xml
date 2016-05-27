@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorButtonClicked">
+
+    <RelativeLayout
+        android:id="@+id/iv_splash_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp">
+
+        <ImageView
+            android:id="@+id/iv_splash_wifi_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_splash_wifi_4"
+            android:visibility="invisible"
+            android:paddingTop="130dp"
+            android:paddingLeft="80dp"
+            android:paddingRight="80dp"
+            android:layout_centerInParent="true"
+            />
+        <ImageView
+            android:id="@+id/iv_splash_wifi_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_splash_wifi_3"
+            android:visibility="invisible"
+            android:paddingTop="130dp"
+            android:paddingLeft="80dp"
+            android:paddingRight="80dp"
+            android:layout_centerInParent="true"
+            />
+        <ImageView
+            android:id="@+id/iv_splash_wifi_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_splash_wifi_2"
+            android:visibility="invisible"
+            android:paddingTop="130dp"
+            android:paddingLeft="80dp"
+            android:paddingRight="80dp"
+            android:layout_centerInParent="true"
+            />
+        <ImageView
+            android:id="@+id/iv_splash_wifi_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_splash_wifi_1"
+            android:visibility="invisible"
+            android:paddingTop="130dp"
+            android:paddingLeft="80dp"
+            android:paddingRight="80dp"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_splash_smile"
+        android:layout_below="@+id/iv_splash_wifi"
+        android:layout_centerHorizontal="true"
+        />
+
+</RelativeLayout>

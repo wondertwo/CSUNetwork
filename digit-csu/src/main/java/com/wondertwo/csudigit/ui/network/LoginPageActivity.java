@@ -1,4 +1,4 @@
-package com.wondertwo.csunetwork.ui.network;
+package com.wondertwo.csudigit.ui.network;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -9,14 +9,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import com.wondertwo.csunetwork.R;
-import com.wondertwo.csunetwork.async.AsyncTaskWarpper;
-import com.wondertwo.csunetwork.async.AsyncWorkResult;
-import com.wondertwo.csunetwork.async.listener.NotifyListener;
-import com.wondertwo.csunetwork.newwork.NetConnectFactory;
-import com.wondertwo.csunetwork.constant.NetworkConstant;
-import com.wondertwo.csunetwork.utils.NetConnectUtils;
-import com.wondertwo.csunetwork.utils.ShowToastUtils;
+import com.wondertwo.csudigit.R;
+import com.wondertwo.csudigit.async.AsyncTaskWarpper;
+import com.wondertwo.csudigit.async.AsyncWorkResult;
+import com.wondertwo.csudigit.async.listener.NotifyListener;
+import com.wondertwo.csudigit.constant.NetworkConstant;
+import com.wondertwo.csudigit.newwork.NetConnectFactory;
+import com.wondertwo.csudigit.utils.MatchStatusBarUtils;
+import com.wondertwo.csudigit.utils.NetConnectUtils;
+import com.wondertwo.csudigit.utils.ShowToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,6 +41,8 @@ public class LoginPageActivity extends BaseNetworkActivity {
         super.onCreate(savedInstanceState);
         // 设置前景布局
         setContentView(R.layout.activity_login_page);
+        /*MatchStatusBarUtils.setTranslucent(this, 255);*/
+        MatchStatusBarUtils.setTransparent(this);
 
         inputUserNumber = (EditText) findViewById(R.id.user_number);
         inputUserPassword = (EditText) findViewById(R.id.user_password);

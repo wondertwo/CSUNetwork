@@ -1,1 +1,1 @@
-include ':csunetwork', ':SlidingMenuLibrary'
+include ':networkdemo', ':SlidingMenuLibrary', ':digit-csu', ':systembardemo', ':digit-csu-2', ':3dTagCloud', ':tagcloudlib', ':android-skin-loader-lib', ':android-skin-loader-sample', ':android-skin-loader-skin'

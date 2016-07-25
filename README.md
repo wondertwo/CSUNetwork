@@ -1,16 +1,16 @@
 
 
-# csu-network 中文名：中小南（数字中南Android客户端）
+# 中小南（数字中南Android客户端）, csu-network
 
 ------------
 
-## 一个简洁、易用的中南大学校园网数字中南登录下线app
+## 简洁、易用的中南大学校园网数字中南登录下线app
 
-and now, version 2.0.1-release is available!
+###and now, version 2.0.1-release is available!
 
-in which version, changing skin feature was added, you can experience it by downloading at: http://fir.im/53hx
+###in which version, changing skin feature was added, you can experience it by downloading at: http://fir.im/53hx
 
-and you also can download it at 小米应用商店 & 魅族应用商店.
+###and you also can download it at 小米应用商店 & 魅族应用商店.
 
 ----------
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--原来主题颜色-->
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!--换肤主题颜色，八位颜色值-->
+    <color name="color_btn_normal">#E9CE3D3A</color>
+    <color name="color_btn_pressed">#F7E43733</color>
+    <color name="color_progressbar_bg">#FFCE3D3A</color>
+    <color name="color_activity_bg">#FFFFFFFF</color>
+    <color name="color_drawer_bg">#FF00868B</color>
+    <color name="color_btn_text">#FF000000</color>
+    <color name="color_title_bar_bg">#FFCE3D3A</color>
+    <color name="color_title_bar_text">#FF000000</color>
+    <color name="color_list_view_bg">#FF00868B</color>
+    <color name="color_divider">#FFEBEBEB</color>
+    <color name="color_dialog_bg">#FFECF0F1</color>
+    <color name="color_dialog_text">#FF000000</color>
+    <color name="color_dialog_primary">#EF5350</color>
+    <color name="color_text">#FF000000</color>
+
+</resources>

@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">中小南</string>
+    <string name="app_skin">DefaultSkin.skin</string>
+    <string name="container_bar_color">#FFCE3D3A</string>
+    <string name="drawer_bar_color">#FF00868B</string>
+    <string name="tip">提示</string>
+    <string name="confirm">确定</string>
+
+    <!--ContainerActivity-->
+    <string name="textview_empty">输入不能为空</string>
+    <string name="not_connected_wifi">你暂未连接WIFI</string>
+    <string name="goto_connect">连接</string>
+    <string name="login_success">登陆成功</string>
+    <string name="logout_success">下线成功</string>
+    <string name="unknow_result_login_failed">可能已在线，请下线后再登陆</string>
+    <string name="online_try_logout">已在线？下线</string>
+    <string name="logout_fail">下线失败，可尝试关闭WIFI五分钟</string>
+    <string name="on_drawer_open">open</string>
+    <string name="on_drawer_close">close</string>
+
+    <!--LoginSuccess-->
+    <string name="cancel">取消</string>
+    <string name="unknow_result_logout_failed">未知结果导致下线失败</string>
+    <string name="about_learn_more">了解更多关于应用的信息？</string>
+    <string name="goto_author_blog">作者博客</string>
+    <string name="goto_app_introduce">源码分析</string>
+    <string name="first_start_tip">欢迎使用！你的账号信息存储在手机本地，请放心使用。</string>
+    <string name="goto_login_page">开始使用</string>
+    <string name="welcome_you">欢迎你，</string>
+    <string name="header_title">Your Title</string>
+    <string name="footer_button_close">CLOSE</string>
+    <string name="footer_button_confirm">CONFIRM</string>
+    <string name="dialog_content_text">dialog content text</string>
+    <string name="dialog_simple_item">Google Plus</string>
+    <string name="change_skin">switch skin</string>
+
+    <string-array name="login_tip">
+        <item>登陆成功</item>
+        <item>其他原因认证拒绝</item>
+        <item>用户连接已经存在</item>
+        <item>接入服器务繁忙，稍后重试</item>
+        <item>未知错误</item>
+        <item>认证响应超时</item>
+        <item>捕获用户网络地址错误</item>
+        <item>服务器网络连接异常</item>
+        <item>认证服务脚本执行异常</item>
+        <item>校验码错误</item>
+        <item>你的密码相对简单，帐号存在被盗风险，请及时修改</item>
+        <item>无法获取网络地址,请确定已连接数字中南</item>
+        <item>无法获取接入地址,请确定已连接数字中南</item>
+        <item>无法获取你套餐信息</item>
+        <item>未知原因导致登录失败</item>
+    </string-array>
+
+    <string-array name="logout_tip">
+        <item>下线成功</item>
+        <item>服务器拒绝请求</item>
+        <item>下线请求执行失败</item>
+        <item>你已经下线</item>
+        <item>服务器响应超时</item>
+        <item>后台网络连接异常</item>
+        <item>服务脚本执行异常</item>
+        <item>未知错误</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    android:id="@+id/drawer_fragment_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_drawer_bg"
+    skin:enable="true">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_user_head"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="40dp"
+        skin:enable="true" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_divider"
+            skin:enable="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:src="@drawable/img_setting_skin"
+                skin:enable="true" />
+            <Button
+                android:id="@+id/menu_setting_skin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:text="主题换肤"
+                android:textColor="@color/color_btn_text"
+                android:textSize="20sp"
+                skin:enable="true" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_divider"
+            skin:enable="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:src="@drawable/img_online_topup"
+                skin:enable="true" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="20dp"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:text="在线充值"
+                android:textColor="@color/color_btn_text"
+                android:textSize="20sp"
+                skin:enable="true" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_divider"
+            skin:enable="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:src="@drawable/img_user_info"
+                skin:enable="true" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="20dp"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:text="账户信息"
+                android:textColor="@color/color_btn_text"
+                android:textSize="20sp"
+                skin:enable="true" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_divider"
+            skin:enable="true" />
+    </LinearLayout>
+
+</LinearLayout>

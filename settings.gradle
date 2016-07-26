@@ -1,1 +1,4 @@
-include ':digit-csu', ':SlidingMenuLibrary', ':digitcsu', ':3dTagCloud', ':3d-cloud-lib', ':android-skin-loader-lib', ':android-skin-loader-sample', ':android-skin-loader-skin', ':dialogplus-library', ':dialogplus-demo', ':avast-dialog-library'
+include ':digit-csu-v2',
+        ':android-skin-loader-lib',
+        ':android-skin-loader-skin',
+        ':android-volley-lib'

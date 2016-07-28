@@ -1,27 +1,27 @@
 package me.wondertwo.csu.async;
 
 
-import me.wondertwo.csu.async.listener.NotifyListener;
-
 import java.util.concurrent.Callable;
+
+import me.wondertwo.csu.async.listener.NotifyListener;
 
 /**
  *
  * Created by wondertwo on 2016/4/6.
  */
-public class AsyncTaskWarpper {
+public class AsyncTaskWrapper {
 
-    private static AsyncTaskWarpper asyncTaskWarpper;
+    private static AsyncTaskWrapper asyncTaskWrapper;
 
-    private AsyncTaskWarpper() {
+    private AsyncTaskWrapper() {
 
     }
 
-    public static synchronized AsyncTaskWarpper getATWInstance() {
-        if (null == asyncTaskWarpper) {
-            asyncTaskWarpper = new AsyncTaskWarpper();
+    public static synchronized AsyncTaskWrapper getATWInstance() { //synchronized
+        if (asyncTaskWrapper == null) {
+            asyncTaskWrapper = new AsyncTaskWrapper();
         }
-        return asyncTaskWarpper;
+        return asyncTaskWrapper;
     }
 
     public AsyncTaskWork doAsyncWork(final Runnable work,

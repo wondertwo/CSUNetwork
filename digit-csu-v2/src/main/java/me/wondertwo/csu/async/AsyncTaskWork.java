@@ -2,12 +2,12 @@ package me.wondertwo.csu.async;
 
 import android.util.Log;
 
+import java.lang.ref.WeakReference;
+import java.util.concurrent.Callable;
+
 import me.wondertwo.csu.async.exception.ExceptionWarpper;
 import me.wondertwo.csu.async.listener.NotifyListener;
 import me.wondertwo.csu.net.NetRequestResult;
-
-import java.lang.ref.WeakReference;
-import java.util.concurrent.Callable;
 
 /**
  *
@@ -16,57 +16,35 @@ import java.util.concurrent.Callable;
 public class AsyncTaskWork extends AdaptiveAsyncTask<Void, Object, Object> {
 
     enum State {
-        /**
-         * PENDING
-         */
+        /** PENDING */
         PENDING,
-        /**
-         * RUNNING
-         */
+        /** RUNNING */
         RUNNING,
-        /**
-         * DONE
-         */
+        /** DONE */
         DONE,
-        /**
-         * ABORT
-         */
+        /** ABORT */
         ABORT
     }
 
-    /**
-     * state
-     */
+    /** state */
     private State state = State.PENDING;
 
-    /**
-     * finishListener
-     */
+    /** finishListener */
     protected NotifyListener finishListener;
 
-    /**
-     * cancleListener
-     */
-    protected NotifyListener cancleListener;
+    /** cancelListener */
+    protected NotifyListener cancelListener;
 
-    /**
-     * progressListener
-     */
+    /** progressListener */
     protected NotifyListener progressListener;
 
-    /**
-     * work
-     */
-    private final Callable<Object> work;
+    /** work */
+    private Callable<Object> work;
 
-    /**
-     * workChainHead
-     */
+    /** workChainHead */
     private WeakReference<AsyncTaskWork> workChainHead;
 
-    /**
-     * allowCancel
-     */
+    /** allowCancel */
     private boolean allowCancel = true;
 
     public AsyncTaskWork(Callable<Object> work, boolean allowCancel,
@@ -87,15 +65,10 @@ public class AsyncTaskWork extends AdaptiveAsyncTask<Void, Object, Object> {
         }
         this.work = work;
         this.allowCancel = allowCancel;
-        this.cancleListener = cancelListener;
+        this.cancelListener = cancelListener;
         this.finishListener = finishListener;
         this.progressListener = progressListener;
         workChainHead = new WeakReference<AsyncTaskWork>(this);
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
     }
 
     /* (non-Javadoc)
@@ -103,14 +76,16 @@ public class AsyncTaskWork extends AdaptiveAsyncTask<Void, Object, Object> {
      */
     @Override
     protected Object doInBackground(Void... params) {
+        Log.e("do in background", "-------begin-----");
         if (null != work) {
             try {
                 changeState(State.RUNNING);
                 Object data = work.call();
-                Log.e("data", data.toString());
-                NetRequestResult result = new NetRequestResult(ExceptionWarpper.NO_ERROR, data);
-                result.setSrcTask(this);
-                return result;
+                Log.e("do in background:data", data.toString());
+                NetRequestResult r = new NetRequestResult(ExceptionWarpper.NO_ERROR, data);
+                Log.e("do in background:data", r.toString());
+                r.setSrcTask(this);
+                return r;
             } catch (Exception e) {
                 if (e instanceof ExceptionWarpper) {
                     return new NetRequestResult(((ExceptionWarpper) e).getmExceptionType(), e);
@@ -122,16 +97,18 @@ public class AsyncTaskWork extends AdaptiveAsyncTask<Void, Object, Object> {
         return null;
     }
 
-    /**
-     * 网络请求结束监听的回调
-     */
     @Override
     protected void onPostExecute(Object result) {
-        super.onPostExecute(result);
+        //super.onPostExecute(result);
         changeState(State.DONE);
         if (isDone()) {
             if (null != finishListener) {
+                Log.e("finish listener", result.toString());
                 finishListener.onNotify(result);
+                if (!this.isCancelled()) {
+                    Log.e("finish listener", "task is not canceled");
+                    this.cancel(true);
+                }
             }
         }
     }
@@ -143,16 +120,13 @@ public class AsyncTaskWork extends AdaptiveAsyncTask<Void, Object, Object> {
         }
     }
 
-    /**
-     * 网络请求取消监听的回调
-     */
     @Override
     public void onCancelled() {
         super.onCancelled();
         changeState(State.ABORT);
         if (isAbort()) {
-            if (null != cancleListener) {
-                cancleListener.onNotify(null);
+            if (null != cancelListener) {
+                cancelListener.onNotify(null);
             }
         }
     }
@@ -161,7 +135,9 @@ public class AsyncTaskWork extends AdaptiveAsyncTask<Void, Object, Object> {
         return State.DONE.equals(state);
     }
 
-    public boolean isAbort() { return State.ABORT.equals(state); }
+    public boolean isAbort() {
+        return State.ABORT.equals(state);
+    }
 
     public boolean isRunning() {
         return State.RUNNING.equals(state);
@@ -178,11 +154,10 @@ public class AsyncTaskWork extends AdaptiveAsyncTask<Void, Object, Object> {
 
     /**
      * 如果一个流程中包含多个task，利用该方法把task串成task链，取消正在执行的task，则后续的都不会执行。
-     *
      * @param work
      */
     public void setWorkTask(AsyncTaskWork work) {
-        this.workChainHead = new WeakReference<AsyncTaskWork>(work);
+        this.workChainHead = new WeakReference<>(work);
     }
 
     public boolean abort() {

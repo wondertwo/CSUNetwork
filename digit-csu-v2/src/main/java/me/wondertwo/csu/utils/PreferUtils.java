@@ -12,7 +12,7 @@ import android.preference.PreferenceManager;
  */
 public class PreferUtils {
     private Context context;
-    private static SharedPreferences sp = null;
+    private SharedPreferences sp = null;
     private SharedPreferences.Editor edit = null;
 
     public PreferUtils(Context context) {
@@ -21,20 +21,20 @@ public class PreferUtils {
 
     public PreferUtils(Context context, String filename) {
         this(context, context.getSharedPreferences(filename,
-                Context.MODE_PRIVATE));
+                Context.MODE_WORLD_WRITEABLE));
     }
 
     public PreferUtils(Context context, SharedPreferences sp) {
         this.context = context;
-        PreferUtils.sp = sp;
+        this.sp = sp;
         edit = sp.edit();
     }
 
     /**
      * 获取SharedPreferences对象
      */
-    public static PreferUtils getSpUtil(Context context) {
-        return (PreferUtils) context.getSharedPreferences("sp_container", Context.MODE_PRIVATE);
+    public SharedPreferences getSp(Context context) {
+        return sp;
     }
 
     // Set
@@ -45,18 +45,10 @@ public class PreferUtils {
         edit.commit();
     }
 
-    public void setValue(int resKey, boolean value) {
-        setValue(this.context.getString(resKey), value);
-    }
-
     // Float
     public void setValue(String key, float value) {
         edit.putFloat(key, value);
         edit.commit();
-    }
-
-    public void setValue(int resKey, float value) {
-        setValue(this.context.getString(resKey), value);
     }
 
     // Integer
@@ -64,29 +56,16 @@ public class PreferUtils {
         edit.putInt(key, value);
         edit.commit();
     }
-
-    public void setValue(int resKey, int value) {
-        setValue(this.context.getString(resKey), value);
-    }
-
     // Long
     public void setValue(String key, long value) {
         edit.putLong(key, value);
         edit.commit();
     }
 
-    public void setValue(int resKey, long value) {
-        setValue(this.context.getString(resKey), value);
-    }
-
     // String
     public void setValue(String key, String value) {
         edit.putString(key, value);
         edit.commit();
-    }
-
-    public void setValue(int resKey, String value) {
-        setValue(this.context.getString(resKey), value);
     }
 
     // Get
@@ -96,17 +75,9 @@ public class PreferUtils {
         return sp.getBoolean(key, defaultValue);
     }
 
-    public boolean getValue(int resKey, boolean defaultValue) {
-        return getValue(this.context.getString(resKey), defaultValue);
-    }
-
     // Float
     public float getValue(String key, float defaultValue) {
         return sp.getFloat(key, defaultValue);
-    }
-
-    public float getValue(int resKey, float defaultValue) {
-        return getValue(this.context.getString(resKey), defaultValue);
     }
 
     // Integer
@@ -114,26 +85,14 @@ public class PreferUtils {
         return sp.getInt(key, defaultValue);
     }
 
-    public int getValue(int resKey, int defaultValue) {
-        return getValue(this.context.getString(resKey), defaultValue);
-    }
-
     // Long
     public long getValue(String key, long defaultValue) {
         return sp.getLong(key, defaultValue);
     }
 
-    public long getValue(int resKey, long defaultValue) {
-        return getValue(this.context.getString(resKey), defaultValue);
-    }
-
     // String
     public String getValue(String key, String defaultValue) {
         return sp.getString(key, defaultValue);
-    }
-
-    public String getValue(int resKey, String defaultValue) {
-        return getValue(this.context.getString(resKey), defaultValue);
     }
 
     // Delete

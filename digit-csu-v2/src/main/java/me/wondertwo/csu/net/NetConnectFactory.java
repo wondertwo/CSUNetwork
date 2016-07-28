@@ -4,8 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import me.wondertwo.csu.utils.PreferUtils;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -25,6 +23,8 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
+import me.wondertwo.csu.app.MainApplication;
 
 /**
  * NetConnectFactory，网络请求工厂类
@@ -82,6 +82,7 @@ public class NetConnectFactory {
                 response = defaultHttpClient.execute(httpPost);
                 entity = response.getEntity();
                 result = EntityUtils.toString(entity, "UTF-8");
+                Log.e("do login(), result", result.toString());
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (ClientProtocolException e) {
@@ -97,9 +98,11 @@ public class NetConnectFactory {
      * 下线
      */
     public String doLogout() {
-        String brasAddress = PreferUtils.getSpUtil(mContext).getValue(NetworkConstant.SP_USER_BRAS_ADDRESS, "");
-        String userIntranetAddress = PreferUtils.getSpUtil(mContext).getValue(NetworkConstant.SP_USER_INTRANET_ADDRESS, "");
+        String brasAddress = MainApplication.getSpUtil().getValue(NetworkConstant.SP_USER_BRAS_ADDRESS, "");
+        String userIntranetAddress = MainApplication.getSpUtil().getValue(NetworkConstant.SP_USER_INTRANET_ADDRESS, "");
+        Log.e("do logout", brasAddress + "    " + userIntranetAddress);
         if (TextUtils.isEmpty(brasAddress) || TextUtils.isEmpty(userIntranetAddress)) {
+            Log.e("do logout", "address is null");
             return "";
         }
         //添加所需要的post内容
@@ -107,17 +110,16 @@ public class NetConnectFactory {
         values.add(new BasicNameValuePair("brasAddress", brasAddress));
         values.add(new BasicNameValuePair("userIntranetAddress", userIntranetAddress));
         HttpPost httpPost = new HttpPost(LOGOUT_POST_URL);
-        HttpResponse responses = null;
-        HttpEntity entity = null;
         String result = "";
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(values));
             httpPost.setHeader(new BasicHeader("Referer", LOGOUT_PEFER));
-            responses = defaultHttpClient.execute(httpPost);
-            entity = responses.getEntity();
+            HttpResponse responses = defaultHttpClient.execute(httpPost);
+            HttpEntity entity = responses.getEntity();
             result = EntityUtils.toString(entity, "UTF-8");
-            if (null == entity)
-                Log.d("Response content有问题", result);
+            Log.e("Response content", entity.toString());
+            if (null != entity)
+                Log.d("Response content有问题", entity.toString());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
@@ -135,7 +137,7 @@ public class NetConnectFactory {
     public String encrytePassword(String passwordInStr) {
         String mudulusInHexStr = "a8a02b821d52d3d0ca90620c78474b78435423be99da83cc190ab5cb5b9b922a4c8ba6b251e78429757cf11cde119e1eacff46fa3bf3b43ef68ceb29897b7aa6b5b1359fef6f35f32b748dc109fd3d09f3443a2cc3b73e99579f3d0fe6a96ccf6a48bc40056a6cac327d309b93b1d61d6f6e8f4a42fc9540f34f1c4a2e053445";
         String exponentInHexStr = "10001";
-        String result = "";
+        String result;
         BigInteger bigInt_mudulus = new BigInteger(mudulusInHexStr, 16);
         BigInteger bigInt_exponent = new BigInteger(exponentInHexStr, 16);
         BigInteger bigInt_password = new BigInteger(new StringBuilder(passwordInStr).reverse().toString().getBytes());
@@ -159,21 +161,32 @@ public class NetConnectFactory {
         try {
             HttpResponse response = defaultHttpClient.execute(httpGet);
             HttpEntity entity = response.getEntity();
+            Log.e("get address: entity", entity.toString());
             if (entity != null) {
+                Log.e("get address: entity", "entity is not null");
                 String html = EntityUtils.toString(entity, "UTF-8");
                 Document doc = Jsoup.parse(html);
+                Log.e("get address: html,doc", doc.val().toString());
                 //System.out.print(doc.val().toString());
+                Log.e("get address --e1", "exception--1");
                 String userIntranetAddress = doc.getElementById("userIntranetAddress").val().toString();
+                if (userIntranetAddress != null) {
+                    Log.e("get address --e2", userIntranetAddress.toString());
+                }
                 String brasAddress = doc.getElementById("brasAddress").val().toString();
-                //System.out.println(userIntranetAddress + "    " + brasAddress);
+                if (brasAddress != null) {
+                    Log.e("get address --e3", brasAddress.toString());
+                }
                 addresses.add(new BasicNameValuePair("userIntranetAddress", userIntranetAddress));
                 addresses.add(new BasicNameValuePair("brasAddress", brasAddress));
-                PreferUtils.getSpUtil(mContext).setValue(NetworkConstant.SP_USER_BRAS_ADDRESS, brasAddress);
-                PreferUtils.getSpUtil(mContext).setValue(NetworkConstant.SP_USER_INTRANET_ADDRESS, userIntranetAddress);
+                MainApplication.getSpUtil().setValue(NetworkConstant.SP_USER_BRAS_ADDRESS, brasAddress);
+                MainApplication.getSpUtil().setValue(NetworkConstant.SP_USER_INTRANET_ADDRESS, userIntranetAddress);
             }
         } catch (Exception e) {
-            return null;
+            Log.e("get address", "catch exception");
+            e.printStackTrace();
         }
+        Log.e("get address end:address", addresses.toString());
         return addresses;
     }
 }

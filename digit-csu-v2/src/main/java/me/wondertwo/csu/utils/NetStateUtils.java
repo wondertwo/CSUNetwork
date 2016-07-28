@@ -35,10 +35,12 @@ public class NetStateUtils {
     public static boolean checkWifiConnection(Context context) {
         final ConnectivityManager connMgr = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        final NetworkInfo wifiInfo = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiInfo.isAvailable()) {
+        NetworkInfo.State wifiConn = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
+        if (wifiConn == NetworkInfo.State.CONNECTED || wifiConn== NetworkInfo.State.CONNECTING) {
+            Log.e("wifi connection", "true");
             return true;
         } else {
+            Log.e("wifi connection", "false");
             return false;
         }
     }

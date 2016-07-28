@@ -6,30 +6,23 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-
-import me.wondertwo.csu.R;
-import me.wondertwo.csu.adapter.ListviewAdapter;
-import me.wondertwo.csu.adapter.ViewHolder;
-import me.wondertwo.csu.async.AsyncTaskWarpper;
-import me.wondertwo.csu.async.listener.NotifyListener;
-import me.wondertwo.csu.net.NetConnectFactory;
-import me.wondertwo.csu.net.NetRequestResult;
-import me.wondertwo.csu.ui.ContainerActivity;
-import me.wondertwo.csu.ui.TopLevelActivity;
-import me.wondertwo.csu.utils.ToastUtils;
-import me.wondertwo.csu.utils.statusbar.StatusBarUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
+
+import me.wondertwo.csu.R;
+import me.wondertwo.csu.adapter.ListviewAdapter;
+import me.wondertwo.csu.adapter.ViewHolder;
+import me.wondertwo.csu.ui.ContainerActivity;
+import me.wondertwo.csu.ui.TopLevelActivity;
+import me.wondertwo.csu.utils.statusbar.StatusBarUtils;
 
 /**
  *
@@ -97,9 +90,9 @@ public class LoginSuccess extends TopLevelActivity {
     /**
      * 下线方法和LoginActivity的下线方法有重复代码，下期重构掉或者统一下线入口
      */
-    public void onLogoutButtonClicked(View view) {
+    /*public void onLogoutButtonClicked(View view) {
         showProgressbar();
-        AsyncTaskWarpper.getATWInstance().doAsyncWork(new Callable<Object>() {
+        AsyncTaskWrapper.getATWInstance().doAsyncWork(new Callable<Object>() {
             @Override
             public Object call() throws Exception {
                 return NetConnectFactory.getNCFInstance(LoginSuccess.this).doLogout();
@@ -129,16 +122,16 @@ public class LoginSuccess extends TopLevelActivity {
                                     showAlertDialog(arr[resultCode]);
                             }
                         } else
-                            showAlertDialog(R.string.unknow_result_logout_failed);
+                            showAlertDialog(R.string.unknown_result_failed);
                     } catch (JSONException e) {
-                        showAlertDialog(R.string.unknow_result_logout_failed);
+                        showAlertDialog(R.string.unknown_result_failed);
                     }
                 } else {
-                    showAlertDialog(R.string.unknow_result_logout_failed);
+                    showAlertDialog(R.string.net_no_response);
                 }
             }
         });
-    }
+    }*/
 
     /**
      * “关于app”图片按钮点击事件

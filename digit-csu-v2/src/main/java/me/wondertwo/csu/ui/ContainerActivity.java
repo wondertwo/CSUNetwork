@@ -22,16 +22,17 @@ import org.json.JSONObject;
 import java.util.concurrent.Callable;
 
 import me.wondertwo.csu.R;
-import me.wondertwo.csu.async.AsyncTaskWarpper;
+import me.wondertwo.csu.app.MainApplication;
+import me.wondertwo.csu.async.AsyncTaskWrapper;
 import me.wondertwo.csu.async.listener.NotifyListener;
 import me.wondertwo.csu.net.NetConnectFactory;
 import me.wondertwo.csu.net.NetRequestResult;
 import me.wondertwo.csu.net.NetworkConstant;
+import me.wondertwo.csu.net.ParseResult;
 import me.wondertwo.csu.ui.drawer.DrawerFragment;
 import me.wondertwo.csu.ui.skin.ChangeSkin;
 import me.wondertwo.csu.ui.wifi.LoginSuccess;
 import me.wondertwo.csu.utils.NetStateUtils;
-import me.wondertwo.csu.utils.PreferUtils;
 import me.wondertwo.csu.utils.SnackBarUtils;
 import me.wondertwo.csu.utils.ToastUtils;
 import me.wondertwo.csu.utils.statusbar.StatusBarUtils;
@@ -45,13 +46,12 @@ public class ContainerActivity extends TopLevelActivity {
 
     private String userNumber; // 账号
     private String userPassword; // 密码
-    private EditText inputUserNumber; // EditText输入的账户
-    private EditText inputUserPassword; // EditText输入的密码
+    private EditText inputUserNumber; // 账户
+    private EditText inputUserPassword; // 密码
     private ProgressBar loginLoadingProbar; // 进度条
     private DrawerLayout mDrawerLayout;
     private LinearLayout mSnackbarContainer;
     private DrawerFragment mDrawerFragment;
-    private PreferUtils mPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,64 +103,30 @@ public class ContainerActivity extends TopLevelActivity {
                 startActivity(new Intent(ContainerActivity.this, ChangeSkin.class));
             }
         });
-        mPreferences = new PreferUtils(this, "sp_container");
         loginLoadingProbar = (ProgressBar) findViewById(R.id.login_loading_probar);
         inputUserNumber = (EditText) findViewById(R.id.user_number);
         inputUserPassword = (EditText) findViewById(R.id.user_password);
 
         resettingUserInfo();
+        checkWifiConnection();
     }
 
     /**
      * 登录按钮点击事件
      */
     public void onLoginButtonClicked(View view) {
+        if (!checkWifiConnection()) { // 检查 wifi 连接状态
+            return;
+        }
         userNumber = inputUserNumber.getText().toString().trim();
         userPassword = inputUserPassword.getText().toString().trim();
-        if (TextUtils.isEmpty(userNumber)) {
-            doTextViewEmptyTip(inputUserNumber);
-        } else if (TextUtils.isEmpty(userPassword)) {
-            doTextViewEmptyTip(inputUserPassword);
-        } else {
-            /**
-             * 判断WIFI是否连接
-             */
-            if (!NetStateUtils.checkWifiConnection(this)) {
-                /**
-                 * WIFI未连接，弹出提示连接框
-                 */
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.tip)
-                        .setMessage(R.string.not_connected_wifi)
-                        .setPositiveButton(R.string.goto_connect, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                /**
-                                 * 打开WIFI设置页面
-                                 */
-                                startActivityForResult(new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS), 0);
-                            }
-                        })
-                        .setNegativeButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ContainerActivity.this.finish();
-                            }
-                        }).show();
-            } else {
-                prepareForLogin();
-            }
+        if (TextUtils.isEmpty(userNumber) || TextUtils.isEmpty(userPassword)) { // 验证输入非空
+            SnackBarUtils.makeShort(mSnackbarContainer, getResources().getString(R.string.textview_empty)).warning();
+            return;
         }
-    }
-
-    /**
-     * 登录前准备工作
-     */
-    private void prepareForLogin() {
-
         showProgressbar();
-        AsyncTaskWarpper.getATWInstance().doAsyncWork(new Callable<Object>() {
-            // 回调方法，在异步任务的doInBackground()方法中执行，发出网络请求，并返回请求结果串
+        AsyncTaskWrapper.getATWInstance().doAsyncWork(new Callable<Object>() {
+            // 回调方法，在异步任务的doInBackground()方法中执行，发出网络请求，并返回请求结果
             @Override
             public Object call() throws Exception {
                 saveUserLoginInfo();
@@ -169,79 +135,39 @@ public class ContainerActivity extends TopLevelActivity {
         }, new NotifyListener() { // cancelListener,异步请求取消的监听,处理取消异常
             @Override
             public void onNotify(Object result) {
-                ToastUtils.showToastShort(ContainerActivity.this, "取消");
+
             }
         }, new NotifyListener() { // finishListener,异步请求结束的监听,处理请求结束逻辑
             @Override
-            public void onNotify(Object result) { // 此处接收的result参数，即为网络请求结果串
+            public void onNotify(Object result) { // 此处接收的result参数，即为网络请求结果
                 dismissProgressbar();
-                NetRequestResult ar = (NetRequestResult) result;
-                if (!TextUtils.isEmpty((String) ar.getArgs()[0])) { // 有返回结果的情况
-                    try {
-                        JSONObject jsonObject = new JSONObject((String) ar.getArgs()[0]);
-                        String[] arr = getResources().getStringArray(R.array.login_result_code);
-                        int resultCode;
-                        if (jsonObject.has("resultCode") && (resultCode = jsonObject.getInt("resultCode")) < arr.length) {
-                            switch (resultCode) {
-                                //0代表登陆成功，10代表密码简单，这两种情况都是登陆成功地提示
-                                case 0:
-                                case 10:
-                                    ToastUtils.showToastShort(ContainerActivity.this, R.string.login_success);
-                                    gotoShowResultActivity(jsonObject.toString());
-                                    break;
-                                case 1:
-                                    if (jsonObject.has("resultDescribe")) {
-                                        showAlertDialog(jsonObject.getString("resultDescribe"));
-                                    }
-                                    break;
-                                default:
-                                    SnackBarUtils.makeLong(mSnackbarContainer, arr[resultCode]);
-                            }
-                        } else {
-                            SnackBarUtils.makeLong(mSnackbarContainer, getString(R.string.unknown_result_login_failed));
-                        }
-                    } catch (JSONException e) {
-                        SnackBarUtils.makeLong(mSnackbarContainer, getString(R.string.unknown_result_login_failed));
-                    }
-                } else {
-                    SnackBarUtils.makeLong(mSnackbarContainer, getString(R.string.unknown_result_login_failed));
+                NetRequestResult response = (NetRequestResult) result;
+                JSONObject entity = ParseResult.getResponseEntity(response);
+                int resultCode = getResultCode(response);
+                switch (resultCode) { // 0表示登陆成功，10表示密码简单，这两种情况都表示登陆成功
+                    case 0:
+                    case 10:
+                        ToastUtils.showToastShort(ContainerActivity.this, R.string.login_success);
+                        gotoShowResultActivity(entity.toString());
+                        break;
+                    default:
+                        SnackBarUtils.makeLong(mSnackbarContainer, ParseResult.parseLoginCode(resultCode)).show();
+                        break;
                 }
             }
         });
     }
 
-                                /*case 0:
-                                case 11:
-                                    // 登陆成功
-                                    SnackBarUtils.makeLong(mCoordinatorLayout, getString(R.string.login_success));
-                                    break;
-                                case 2:
-                                    // 已在线
-                                    SnackBarUtils.makeLong(mCoordinatorLayout, getString(R.string.online_try_logout));
-                                    break;
-                                case 12:
-                                case 13:
-                                    // wifi未连接
-                                    Snackbar.make(mCoordinatorLayout, R.string.not_connected_wifi, Snackbar.LENGTH_LONG)
-                                            .setAction(R.string.confirm, new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                                                }
-                                            }).show();
-                                    break;
-                                default:
-                                    // 未知错误
-                                    SnackBarUtils.makeLong(mCoordinatorLayout, getString(R.string.unknown_error));
-                                    break;*/
-
-
     /**
      * 已在线？尝试下线
      */
     public void onOnlineLogoutClicked(View view) {
+        if (!checkWifiConnection()) { // 检查 wifi 连接状态
+            return;
+        }
         showProgressbar();
-        AsyncTaskWarpper.getATWInstance().doAsyncWork(new Callable<Object>() {
+        Log.e("progress bar", "--------------");
+        /*AsyncTaskWrapper.getATWInstance().doAsyncWork(new Callable<Object>() {
             @Override
             public Object call() throws Exception {
                 return NetConnectFactory.getNCFInstance(ContainerActivity.this).doLogout();
@@ -254,36 +180,102 @@ public class ContainerActivity extends TopLevelActivity {
         }, new NotifyListener() {
             @Override
             public void onNotify(Object result) {
+                Log.e("=================",result.toString());
                 dismissProgressbar();
+                NetRequestResult response = (NetRequestResult) result;
+                SnackBarUtils.makeLong(mSnackbarContainer, ParseResult.parseLogoutCode(getResultCode(response))).show();
+            }
+        });*/
+
+        AsyncTaskWrapper.getATWInstance().doAsyncWork(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+                String result = NetConnectFactory.getNCFInstance(ContainerActivity.this).doLogout();
+                Log.e("callable", result);
+                return result;
+            }
+        }, new NotifyListener() {
+            @Override
+            public void onNotify(Object result) {
+
+            }
+        }, new NotifyListener() {
+            @Override
+            public void onNotify(Object result) {
+                dismissProgressbar();
+                Log.e("---result---", result.toString());
                 NetRequestResult ar = (NetRequestResult) result;
+                //String json = (String) ar.getArgs()[0];
                 if (!TextUtils.isEmpty(ar.getArgs()[0].toString())) {
-                    if ((ar.getArgs()[0]) instanceof Exception) {
-                        Log.e("============", ar.toString());
-                        SnackBarUtils.makeLong(mSnackbarContainer, getString(R.string.unknow_result_logout_failed));
-                    } else {
-                        try {
-                            JSONObject jsonObject = new JSONObject(ar.getArgs()[0].toString());
-                            String[] arr = getResources().getStringArray(R.array.logout_result_code);
-                            int resultCode;
-                            if (jsonObject.has("resultCode") && (resultCode = jsonObject.getInt("resultCode")) < arr.length) {
-                                switch (resultCode) {
-                                    case 0:
-                                        ToastUtils.showToastShort(ContainerActivity.this, R.string.logout_success);
-                                        break;
-                                    default:
-                                        SnackBarUtils.makeLong(mSnackbarContainer, arr[resultCode]);
-                                }
-                            } else
-                                SnackBarUtils.makeLong(mSnackbarContainer, getString(R.string.unknow_result_logout_failed));
-                        } catch (JSONException e) {
-                            SnackBarUtils.makeLong(mSnackbarContainer, getString(R.string.unknow_result_logout_failed));
-                        }
+                    try {
+
+                        Object o = ar.getArgs()[0];
+                        Log.e("ar.getArgs()[0]", o.toString());
+
+                        JSONObject jsonObject = new JSONObject(ar.getArgs()[0].toString());
+                        String[] arr = getResources().getStringArray(R.array.logout_result_code);
+                        int resultCode;
+                        if (jsonObject.has("resultCode") && (resultCode = jsonObject.getInt("resultCode")) < arr.length) {
+                            switch (resultCode) {
+                                case 0:
+                                    ToastUtils.showToastShort(ContainerActivity.this, R.string.logout_success);
+                                    break;
+                                default:
+                                    SnackBarUtils.makeLong(mSnackbarContainer, arr[resultCode]).warning();
+                            }
+                        } else
+                            SnackBarUtils.makeLong(mSnackbarContainer, getString(R.string.unknown_result_failed)).warning();
+                    } catch (JSONException e) {
+                        SnackBarUtils.makeLong(mSnackbarContainer, getString(R.string.unknown_result_failed)).warning();
                     }
                 } else {
-                    SnackBarUtils.makeLong(mSnackbarContainer, getString(R.string.unknow_result_logout_failed));
+                    SnackBarUtils.makeLong(mSnackbarContainer, getString(R.string.net_no_response)).warning();
                 }
             }
         });
+    }
+
+    /**
+     * 判断 WIFI 是否打开，未打开则弹出snack bar跳转到WIFI设置页面
+     */
+    private boolean checkWifiConnection() {
+        if (!NetStateUtils.checkWifiConnection(this)) {
+            Log.e("check wifi connection", "wifi is not connected");
+            SnackBarUtils.makeLong(mSnackbarContainer, getString(R.string.not_connected_wifi))
+                    .warning("去设置", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivityForResult(new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS), 0);
+                        }
+                    });
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 根据网络请求结果计算结果码
+     *
+     * @param result
+     * @return
+     */
+    private int getResultCode(NetRequestResult result) {
+        if (!TextUtils.isEmpty((String) result.getArgs()[0])) { // 有返回结果的情况
+            try {
+                JSONObject jsonObject = new JSONObject((String) result.getArgs()[0]);
+                int resultCode;
+                if (jsonObject.has("resultCode") && (resultCode = jsonObject.getInt("resultCode")) < 16) {
+                    return resultCode;
+                } else {
+                    SnackBarUtils.makeLong(mSnackbarContainer, getString(R.string.unknown_result_failed)).show();
+                }
+            } catch (JSONException e) {
+                SnackBarUtils.makeLong(mSnackbarContainer, getString(R.string.unknown_result_failed)).show();
+            }
+        } else {
+            SnackBarUtils.makeLong(mSnackbarContainer, getString(R.string.net_no_response)).show();
+        }
+        return -1; // 表示无返回结果
     }
 
     /**
@@ -310,8 +302,8 @@ public class ContainerActivity extends TopLevelActivity {
      * 填充保存的用户名和密码
      */
     public void resettingUserInfo() {
-        userNumber = mPreferences.getValue(NetworkConstant.SP_USER_NUMBER, "");
-        userPassword = mPreferences.getValue(NetworkConstant.SP_USER_PASSWORD, "");
+        userNumber = MainApplication.getSpUtil().getValue(NetworkConstant.SP_USER_NUMBER, "");
+        userPassword = MainApplication.getSpUtil().getValue(NetworkConstant.SP_USER_PASSWORD, "");
         inputUserNumber.setText(userNumber);
         inputUserPassword.setText(userPassword);
     }
@@ -322,16 +314,8 @@ public class ContainerActivity extends TopLevelActivity {
     private void saveUserLoginInfo() {
         userNumber = inputUserNumber.getText().toString().trim();
         userPassword = inputUserPassword.getText().toString().trim();
-        mPreferences.setValue(NetworkConstant.SP_USER_NUMBER, userNumber);
-        mPreferences.setValue(NetworkConstant.SP_USER_PASSWORD, userPassword);
-    }
-
-    /**
-     * 输入为空的提示
-     */
-    private void doTextViewEmptyTip(EditText et) {
-        et.requestFocus(); // 获取焦点
-        ToastUtils.showToastShort(this, getResources().getString(R.string.textview_empty));
+        MainApplication.getSpUtil().setValue(NetworkConstant.SP_USER_NUMBER, userNumber);
+        MainApplication.getSpUtil().setValue(NetworkConstant.SP_USER_PASSWORD, userPassword);
     }
 
     private void showAlertDialog(String content) {

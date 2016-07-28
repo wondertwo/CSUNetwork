@@ -13,9 +13,9 @@ import java.util.concurrent.Executors;
 public abstract class AdaptiveAsyncTask<Params, Progress, Result> extends
         AsyncTask<Params, Progress, Result> {
 
-    private static final int CPU_COUT = Runtime.getRuntime().availableProcessors();
+    private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
 
-    private static final Executor FIX_EXECUTORS = Executors.newFixedThreadPool(Math.max(CPU_COUT, 5));
+    private static final Executor FIX_EXECUTORS = Executors.newFixedThreadPool(Math.max(CPU_COUNT, 5));
 
     /**
      * Android3.0+，系统默认使用SerialExecutor，是单线程池，这里将并发同时请求数量增大

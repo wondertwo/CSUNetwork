@@ -3,6 +3,12 @@ package me.wondertwo.csu.voll;
 import android.content.Context;
 import android.util.Log;
 
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.math.BigInteger;
+
 import me.android.volley.DefaultRetryPolicy;
 import me.android.volley.Request;
 import me.android.volley.RequestQueue;
@@ -10,14 +16,8 @@ import me.android.volley.Response;
 import me.android.volley.VolleyError;
 import me.android.volley.toolbox.StringRequest;
 import me.android.volley.toolbox.Volley;
+import me.wondertwo.csu.app.MainApplication;
 import me.wondertwo.csu.net.NetworkConstant;
-import me.wondertwo.csu.utils.PreferUtils;
-
-import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.math.BigInteger;
 
 /**
  *
@@ -140,8 +140,8 @@ public class NetFactory {
                             String brasAddress = doc.getElementById("brasAddress").val().toString();
                             addresses.add("userIntranetAddress", userIntranetAddress);
                             addresses.add("brasAddress", brasAddress);
-                            PreferUtils.getSpUtil(mContext).setValue(NetworkConstant.SP_USER_BRAS_ADDRESS, brasAddress);
-                            PreferUtils.getSpUtil(mContext).setValue(NetworkConstant.SP_USER_INTRANET_ADDRESS, userIntranetAddress);
+                            MainApplication.getSpUtil().setValue(NetworkConstant.SP_USER_BRAS_ADDRESS, brasAddress);
+                            MainApplication.getSpUtil().setValue(NetworkConstant.SP_USER_INTRANET_ADDRESS, userIntranetAddress);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
